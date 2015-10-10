@@ -19,9 +19,9 @@ class cPlayer
 		walkUp = false;
 		walkDown = false;
 		x = 300;
+		y = 250;
 		vspeed = 0;
 		hspeed = 0;
-		y = 250;
 		//Create Code
 	}
 	
@@ -30,12 +30,12 @@ class cPlayer
 		//Check left side
 		enemyX = x2 ;
 		enemyY = y2 ;
-		if(x+32 > enemyX&&x+32 < enemyX+4&&y+32 > enemyY&&y< enemyY+32)
+		if(x+32 > enemyX&&x+32 < enemyX+4&&y+30 > enemyY&&y< enemyY+32)
 		{
 				hspeed = -0.5;
 		}
 		//Check right side
-		if(x < enemyX+32&&x > enemyX+28&&y+32 > enemyY&&y< enemyY+32)
+		if(x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+32)
 		{
 			hspeed = 0.5;
 		}
@@ -45,16 +45,22 @@ class cPlayer
 				vspeed = 0.5;
 		}
 		//Check Down
-		if(y+32 > y2)
+		if(x+32 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4)
 		{
-			if(x+32 > enemyX&&x < enemyX+32&&y+32 > enemyY&&y+32<enemyY+4)
-			{
-				vspeed = -0.5;
-			}
+			vspeed = -0.5;
 		}
 	}
 	void run(SDL_Event event)
 	{
+		//FRICTION FIXING
+		if(hspeed > 0)
+			hspeed -= 0.1;
+		if(hspeed < 0)
+			hspeed += 0.1;
+		if(vspeed < 0)
+			vspeed += 0.1;
+		if(vspeed > 0)
+			vspeed -= 0.1;
 		//Logic code
 		x += hspeed;
 		y += vspeed;
