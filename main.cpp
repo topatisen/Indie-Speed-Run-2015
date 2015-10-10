@@ -97,8 +97,8 @@ int main(int argc, char *argv[]) {
 	cGameState oGame;
 	oGame.create();
 	//Block test
-	cBlockCreator oBlockCreator;
-	oBlockCreator.create();
+	cMapMaker oMapMaker;
+	oMapMaker.create();
 	
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
@@ -117,14 +117,17 @@ int main(int argc, char *argv[]) {
 		oPlayer.run(event);
 		oGame.run(keyboardstate);
 		
-		
+		oMapMaker.makeMap();
 		//Check collisions for all blocks test
-		for(int i = 0; i<oBlockCreator.blockAmount;i++)
+		for(int p = 0; p<48;p++)
 		{
-			oPlayer.checkCollision(oBlockCreator.oBlock[i].x, oBlockCreator.oBlock[i].y);
+			for(int i = 0; i<48;i++)
+			{
+				oPlayer.checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x, oMapMaker.oRoomCreator[p].oBlock[i].y);
+			}
 		}
 		
-		oBlockCreator.generateRoom();
+		
 		
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
@@ -154,7 +157,7 @@ int main(int argc, char *argv[]) {
 			// Menu and points and stuff
 			oGame.draw(renderer, sMenuOverlay, sMenuSelector);
 
-			oBlockCreator.draw(renderer, sRectangle);//new sprite later
+			oMapMaker.draw(renderer, sRectangle);//new sprite later
 			//Player
 			oPlayer.draw(renderer, sPlayer);
 			

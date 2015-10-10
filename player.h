@@ -18,7 +18,7 @@ class cPlayer
 		walkLeft = false;
 		walkUp = false;
 		walkDown = false;
-		x = 270;
+		x = 260;
 		y = 250;
 		vspeed = 0;
 		hspeed = 0;
@@ -30,11 +30,10 @@ class cPlayer
 		//Check left side
 		enemyX = x2 ;
 		enemyY = y2 ;
-		if(x<enemyX+2&&x<enemyX+32&&y <enemyY+32&&y>enemyY)
+		if((x+32 > enemyX&&x+32 < enemyX+4&&y+30 > enemyY&&y< enemyY+30))
 		{
-				//vspeed = -0.5;
+				hspeed = -0.5;
 		}
-		/*
 		//Check right side
 		if((x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+30))
 		{
@@ -49,7 +48,7 @@ class cPlayer
 		if((x+30 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4))
 		{
 			vspeed = -0.5;
-		}*/
+		}
 	}
 	void run(SDL_Event event)
 	{
@@ -140,8 +139,8 @@ class cPlayer
 		renderTexture(sPlayer, ren, x, y);
 		SDL_SetTextureColorMod(sPlayer,
                            0,
-                           128,
-                           0);
+                           255,
+                           255);
 	}
 };
 
