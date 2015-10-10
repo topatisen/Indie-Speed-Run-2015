@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 	
 	//{/* {{{ Textures */
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
-	SDL_Texture *sBackground = loadTexture("sBackground.bmp", renderer);
+	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	//}/* }}} */
 	
 	float avgFPS = 0;
