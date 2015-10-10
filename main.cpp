@@ -105,6 +105,7 @@ mt.max();
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
+	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -187,7 +188,7 @@ mt.max();
 			renderTexture(sBackground, renderer, 0, 0);
 			
 			// Menu and points and stuff
-			oGame.draw(renderer, sMenuOverlay, sMenuSelector);
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
 
 			oMapMaker.draw(renderer, sRectangle);//new sprite later
 			//Player
