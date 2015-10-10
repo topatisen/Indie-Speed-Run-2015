@@ -206,7 +206,7 @@ mt.max();
 
 			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
 			//Player
-			oPlayer.draw(renderer, sPlayer,sHealthbar, sRBar, sGBar, sBBar);
+			oPlayer.draw(renderer, sPlayer,sHealthbar, sRBar, sGBar, sBBar, fFont);
 			
 			//oSpawner.draw(renderer, sEnemy);
 			

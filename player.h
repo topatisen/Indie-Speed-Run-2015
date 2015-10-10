@@ -90,6 +90,12 @@ class cPlayer
 	SDL_Rect ammoBOrig;
 	SDL_Rect ammoBNew;
 
+	char rHex[5];
+	char gHex[5];
+	char bHex[5];
+	SDL_Texture *rHexMessage;
+	SDL_Texture *gHexMessage;
+	SDL_Texture *bHexMessage;
 	float x, y, vspeed, hspeed, enemyX, enemyY;
 	int ammoR, ammoG, ammoB;
 	bool walkRight, walkLeft, walkUp, walkDown;
@@ -107,7 +113,7 @@ class cPlayer
 		rectNew.h = 16;
 
 
-		ammoR = 175;
+		ammoR = 173;
 		ammoG = 255;
 		ammoB = 12;
 
@@ -187,20 +193,20 @@ class cPlayer
 
 		// Ammo bars
 		// red
-		ammoRNew.x = x-64+viewx+256;
-		ammoRNew.y = y-64+viewy;
+		ammoRNew.x = x-64+viewx+284;
+		ammoRNew.y = y-64+viewy-96;
 		ammoRNew.w = ammoR*0.64;
-		ammoRNew.h = 16;
+		ammoRNew.h = 32;
 		// green
-		ammoGNew.x = x-64+viewx+256;
-		ammoGNew.y = y-64+viewy+16;
+		ammoGNew.x = x-64+viewx+284;
+		ammoGNew.y = y-64+viewy-64;
 		ammoGNew.w = ammoG*0.64;
-		ammoGNew.h = 16;	
+		ammoGNew.h = 32;	
 		// blue
-		ammoBNew.x = x-64+viewx+256;
-		ammoBNew.y = y-64+viewy+32;
+		ammoBNew.x = x-64+viewx+284;
+		ammoBNew.y = y-64+viewy-32;
 		ammoBNew.w = ammoB*0.64;
-		ammoBNew.h = 16;	
+		ammoBNew.h = 32;	
 
 		if(playerHealth < 100)
 		{
@@ -295,21 +301,31 @@ class cPlayer
 					}
 			}	
 		}
+		sprintf(rHex,"0x%02X",ammoR);
+		sprintf(gHex,"0x%02X",ammoG);
+		sprintf(bHex,"0x%02X",ammoB);
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar)
+	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font)
 	{
+		rHexMessage = createTextMessage(font, {255,255,255}, rHex, ren);
+		gHexMessage = createTextMessage(font, {255,255,255}, gHex, ren);
+		bHexMessage = createTextMessage(font, {255,255,255}, bHex, ren);
 		//Draw Code
 		//healthbar
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
 		// Ammobars
 		SDL_RenderCopyEx(ren, sRBar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
-		SDL_RenderCopyEx(ren, sBBar, &ammoGOrig, &ammoGNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sGBar, &ammoGOrig, &ammoGNew,0,NULL,SDL_FLIP_NONE);
 		SDL_RenderCopyEx(ren, sBBar, &ammoBOrig, &ammoBNew,0,NULL,SDL_FLIP_NONE);
 		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
                            ammoR,
                            ammoG,
                            ammoB);
+		renderTexture(rHexMessage, ren, 630, 136);
+		renderTexture(gHexMessage, ren, 630, 166);
+		renderTexture(bHexMessage, ren, 630, 196);
+		
 		SDL_SetTextureColorMod(sRBar,255,0,0);
 		SDL_SetTextureColorMod(sGBar,0,255,0);
 		SDL_SetTextureColorMod(sBBar,0,0,255);
