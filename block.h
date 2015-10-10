@@ -12,7 +12,7 @@ class cBlock
 		int x, y,basecol,color1, color2, color3;
 	void create(float x1, float y1,int col1, int col2, int col3 )
 	{
-		color1 = col1+(rand%(col1/2)+1;
+		color1 = 251;
 		color2 = 0;
 		color3 = 0;
 		x = x1;
@@ -29,7 +29,7 @@ class cBlock
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
 		renderTexture(sBlock, ren, x+viewx, y+viewy);
-		SDL_SetTextureColorMod(sPlayer,
+		SDL_SetTextureColorMod(sBlock,
                            color1,
                            color2,
                            color3);
@@ -65,7 +65,7 @@ class cRoomCreator
 		col3 = rand()%244+10;
 		for(int i = 0;i<blockAmount;i++)
 		{
-			oBlock[i].create(blockx+viewx, blocky+viewy);
+			oBlock[i].create(blockx+viewx, blocky+viewy,col1,col2,col3);
 		}
 	}
 	void generateRoom()
@@ -78,7 +78,7 @@ class cRoomCreator
 			{
 				if(blockNum != randDoor)
 				{
-					oBlock[blockNum].create(blockx, blocky);
+					oBlock[blockNum].create(blockx, blocky,col1,col2,col3);
 				}
 				else
 				{
@@ -100,7 +100,7 @@ class cRoomCreator
 			{
 			if(blockNum != randDoor)
 			{
-				oBlock[blockNum].create(blockx, blocky);
+				oBlock[blockNum].create(blockx, blocky,col1,col2,col3);
 			}
 			else
 				{
@@ -121,7 +121,7 @@ class cRoomCreator
 			{
 			if(blockNum != randDoor)
 			{
-				oBlock[blockNum].create(blockx, blocky);
+				oBlock[blockNum].create(blockx, blocky,col1,col2,col3);
 			}
 			else
 				{
@@ -142,7 +142,7 @@ class cRoomCreator
 			{
 			if(blockNum != randDoor)
 			{
-				oBlock[blockNum].create(blockx, blocky);
+				oBlock[blockNum].create(blockx, blocky,col1,col2,col3);
 			}
 			else
 				{
