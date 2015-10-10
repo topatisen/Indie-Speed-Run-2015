@@ -27,7 +27,7 @@ class cGameState
 		playerTwoPoints = 0;
 		menuPosition = 0;
 		// First state is intro
-		state = 1;
+		state = 2;
 	}
 
 	// Handles events
