@@ -12,9 +12,9 @@ class cBlock
 		int x, y,basecol,color1, color2, color3;
 	void create(float x1, float y1,int col1, int col2, int col3 )
 	{
-		color1 = col1+(-20)+rand()%19+1;
-		color2 = col2+(-20)+rand()%19+1;
-		color3 = col2+(-20)+rand()%19+1;
+		color1 = col1+(-20)+pRand()%19+1;
+		color2 = col2+(-20)+pRand()%19+1;
+		color3 = col2+(-20)+pRand()%19+1;
 		x = x1;
 		y = y1;
 		x = x - (x%32);
@@ -55,14 +55,14 @@ class cRoomCreator
 		roomFinished = false;
 		blockAmount = 176;
 		blockNum = 0;
-		roomWidth = rand()%12+1;
-		roomHeight = roomWidth = rand()%12+1;
-		randDoor = (rand()%(roomWidth+roomHeight)+1); 
+		roomWidth = pRand()%12+1;
+		roomHeight = roomWidth = pRand()%12+1;
+		randDoor = (pRand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
 		blocky = y1;
-		col1 = rand()%234+20;
-		col2 = rand()%234+20;
-		col3 = rand()%234+20;
+		col1 = pRand()%234+20;
+		col2 = pRand()%234+20;
+		col3 = pRand()%234+20;
 		for(int i = 0;i<blockAmount;i++)
 		{
 			oBlock[i].create(blockx+viewx, blocky+viewy,col1,col2,col3);
@@ -82,7 +82,7 @@ class cRoomCreator
 				}
 				else
 				{
-					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
 				}
 				
 				blockx +=32;
@@ -104,7 +104,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
 				}
 				blocky += 32;
 				blockNum ++;
@@ -125,7 +125,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
 				}
 				blockx -= 32;
 				blockNum ++;
@@ -146,7 +146,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
 				}
 				blocky -= 32;
 				blockNum ++;
@@ -183,7 +183,7 @@ class cMapMaker
 		oMainRoom.randDoor = 500;
 		for(int i = 0;i<10;i++)
 		{
-			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
+			oRoomCreator[i].create(-800+pRand()%1599+1,-600+pRand()%1199+1);
 		}
 	}
 	
