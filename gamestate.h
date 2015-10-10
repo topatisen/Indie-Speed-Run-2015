@@ -10,9 +10,10 @@ class cGameState
 	public:
 	/* Gamestates
 	 * 0 = intro
-	 * 1 = pause/menu
+	 * 1 = main menu
 	 * 2 = playing
-	 * 3 = exit
+	 * 3 = about
+	 * 4 = exit
 	*/
 	int state;
 	int playerOnePoints;
@@ -30,7 +31,7 @@ class cGameState
 	}
 
 	// Handles events
-	void run(SDL_Event event)
+	int run(SDL_Event event)
 	{
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
@@ -59,9 +60,9 @@ class cGameState
 					menuPosition--;
 					if (menuPosition < 0)
 					{
-						menuPosition = 3;
+						menuPosition = 4;
 					}
-					else if (menuPosition > 3)
+					else if (menuPosition > 4)
 					{
 						menuPosition = 0;
 					}
@@ -71,17 +72,25 @@ class cGameState
 					menuPosition++;
 					if (menuPosition < 0)
 					{
-						menuPosition = 3;
+						menuPosition = 4;
 					}
-					else if (menuPosition > 3)
+					else if (menuPosition > 4)
 					{
 						menuPosition = 0;
+					}
+				}
+				if(event.key.keysym.sym == SDLK_RETURN)
+				{
+					if(menuPosition == 4)
+					{
+						SDL_Quit();
+						return 0;
 					}
 				}
 			}
 		}
 	}
-	
+
 	// Draws to renderer
 	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
 	{
@@ -97,7 +106,7 @@ class cGameState
 		if(state == 1)
 		{
 			renderTexture(sMenuOverlay, ren, 0, 0);
-			renderTexture(sMenuSelector, ren, 0, menuPosition*32);
+			renderTexture(sMenuSelector, ren, 0, menuPosition*100);
 			//Draw menu here
 		}
 

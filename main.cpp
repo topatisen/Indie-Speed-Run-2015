@@ -19,6 +19,7 @@ using namespace std;
 #include "utilities.h"
 #include "player.h" //player-header
 #include "block.h" //block-header, also dungeon generator
+#include "gamestate.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]) {
 	oBlockCreator.create();
 	
 	//while not quitting (gameloop)
-	while(oGame.state != 3) {
+	while(oGame.state != 4) {
 		//fps
 		int frameTicks = capTimer.getTicks();
 	
