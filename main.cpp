@@ -9,6 +9,9 @@ topatisen
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <random>
+#include <vector>
+#include <algorithm>
 #include <stdlib.h>
 #include <cstdio>
 #include <math.h>
@@ -32,7 +35,8 @@ const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 int main(int argc, char *argv[]) {
-	
+	std::mt19937 generator(3);
+	printf("%lu\n", generator());
 	//quit-flag
 	bool quit;
 	srand(3);
