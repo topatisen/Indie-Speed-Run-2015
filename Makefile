@@ -12,7 +12,7 @@ LIBS= -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
 WARN=-Wall -Wextra
 OPT=-o2
-STD=-std=c++0x
+STD=-std=c++11
 DEFINES= $(INCLUDES) $(DEFS) -DSYS_UNIX=1
 CXXFLAGS= -g $(DEFINES) $(OPT) $(STD) $(WARN)
 
