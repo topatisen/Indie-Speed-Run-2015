@@ -9,11 +9,14 @@
 class cBlock
 {
 	public:
-		float x, y;
+		int x, y;
 	void create(float x1, float y1)
 	{
+		
 		x = x1;
 		y = y1;
+		x = x - (x%32);
+		y = y - (y%32);
 	}
 	
 	void run()
@@ -34,13 +37,10 @@ class cRoomCreator
 	public:
 	cBlock oBlock[48];
 	int blockAmount, blockNum;
-	int blockx, blocky, roomWidth, roomHeight, randDoor;
+	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
 	bool topWall, rightWall, downWall, leftWall, roomFinished;
 	void create(float x1, float y1)
 	{
-		//corridorChance = rand()%4+1;
-		//corridorLength = rand()%4+1;
-		
 		topWall = true;
 		rightWall = false;
 		downWall = false;
@@ -67,7 +67,13 @@ class cRoomCreator
 			if(blockNum < roomWidth)
 			{
 				if(blockNum != randDoor)
-				oBlock[blockNum].create(blockx, blocky);
+				{
+					oBlock[blockNum].create(blockx, blocky);
+				}
+				else
+				{
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+				}
 				
 				blockx +=32;
 				blockNum ++;
@@ -83,7 +89,13 @@ class cRoomCreator
 			if(blockNum < roomHeight+roomWidth)
 			{
 			if(blockNum != randDoor)
+			{
 				oBlock[blockNum].create(blockx, blocky);
+			}
+			else
+				{
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+				}
 				blocky += 32;
 				blockNum ++;
 			}
@@ -98,7 +110,13 @@ class cRoomCreator
 			if(blockNum < roomHeight+(roomWidth*2))
 			{
 			if(blockNum != randDoor)
+			{
 				oBlock[blockNum].create(blockx, blocky);
+			}
+			else
+				{
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+				}
 				blockx -= 32;
 				blockNum ++;
 			}
@@ -113,7 +131,13 @@ class cRoomCreator
 			if(blockNum < (roomHeight*2)+(roomWidth*2))
 			{
 			if(blockNum != randDoor)
+			{
 				oBlock[blockNum].create(blockx, blocky);
+			}
+			else
+				{
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
+				}
 				blocky -= 32;
 				blockNum ++;
 			}
@@ -139,10 +163,10 @@ class cRoomCreator
 class cMapMaker
 {
 	public:
-		cRoomCreator oRoomCreator[20];
+		cRoomCreator oRoomCreator[10];
 	void create()
 	{
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
 		}
@@ -150,14 +174,14 @@ class cMapMaker
 	
 	void makeMap()
 	{
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].generateRoom();
 		}
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].draw(ren, sBlock);
 		}

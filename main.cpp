@@ -11,13 +11,13 @@ topatisen
 #include <string>
 #include <stdlib.h>
 #include <cstdio>
-#include "math.h"
+#include <math.h>
+#include "timer.h"
 
 using namespace std;
 
 float viewx = 0;
 float viewy = 0;
-#include "timer.h"
 #include "utilities.h"
 #include "gamestate.h"
 #include "player.h" //player-header
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 	
 	//quit-flag
 	bool quit;
-
+	srand(4);
 	//{/* {{{ FPS-limit tjofrees */
 	//The frames per second timer
 	LTimer fpsTimer;
@@ -122,11 +122,11 @@ int main(int argc, char *argv[]) {
 		oPlayer.run(event);
 		oGame.run(keyboardstate);
 		
-		viewx = -oPlayer.x/2;
-		viewy = -oPlayer.y/2;
+		viewx = 400+(-oPlayer.x);
+		viewy = 300+(-oPlayer.y);
 		oMapMaker.makeMap();
 		//Check collisions for all blocks test
-		for(int p = 0; p<48;p++)
+		for(int p = 0; p<10;p++)
 		{
 			for(int i = 0; i<48;i++)
 			{

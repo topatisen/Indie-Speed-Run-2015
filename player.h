@@ -66,19 +66,19 @@ class cPlayer
 		y += vspeed;
 		if(walkRight == true)
 		{
-				hspeed = 1;
+				hspeed = 2;
 		}
 		if(walkLeft == true)
 		{
-				hspeed = -1;
+				hspeed = -2;
 		}
 		if(walkUp == true)
 		{
-			vspeed = -1;
+			vspeed = -2;
 		}
 		if(walkDown == true)
 		{
-				vspeed = 1;
+				vspeed = 2;
 		}
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
