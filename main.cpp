@@ -32,16 +32,24 @@ float viewy = 0;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
+
+
+
 int main(int argc, char *argv[]) {
-	printf("%lu\n", pRand());
-	printf("%lu\n", pRand());
-	printf("%lu\n", pRand());
-	printf("%lu\n", pRand());
-	printf("%lu\n", pRand());
-	printf("%lu\n", pRand());
+
+std::mt19937 mt(1);
+std::uniform_int_distribution<int32_t> intDist(1,2);
+mt.max();
+
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
+	printf("%lu\n", mt);
 	//quit-flag
 	bool quit;
-	srand(3);
 	//{/* {{{ FPS-limit tjofrees */
 	//The frames per second timer
 	LTimer fpsTimer;
@@ -90,7 +98,9 @@ int main(int argc, char *argv[]) {
 	//}/* }}} */
 	
 	/* {{{ Textures */
+	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sHealthbar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
@@ -110,6 +120,9 @@ int main(int argc, char *argv[]) {
 	cMapMaker oMapMaker;
 	oMapMaker.create();
 	
+	cSpawner oSpawner;
+	oSpawner.create();
+	
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -127,6 +140,9 @@ int main(int argc, char *argv[]) {
 		//Logical, magical!
 		oPlayer.run(event);
 		oGame.run(keyboardstate);
+		
+		oSpawner.run(oPlayer.x+16,oPlayer.y+16);
+		
 		
 		viewx = 400+(-oPlayer.x);
 		viewy = 300+(-oPlayer.y);
@@ -175,7 +191,9 @@ int main(int argc, char *argv[]) {
 
 			oMapMaker.draw(renderer, sRectangle);//new sprite later
 			//Player
-			oPlayer.draw(renderer, sPlayer);
+			oPlayer.draw(renderer, sPlayer,sHealthbar);
+			
+			oSpawner.draw(renderer, sEnemy);
 			
 			renderTexture(msgInfo, renderer, 10, 10);
 			
