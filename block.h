@@ -43,6 +43,8 @@ class cEnemy
 	public:
 		float x, y, vspeed, hspeed, col1, col2, col3,
 				dx, dy;
+				
+		bool alive = false;
 	void create(float startx, float starty)
 	{
 		col1 = 128;
@@ -52,9 +54,19 @@ class cEnemy
 		y = starty;
 		hspeed = 0;
 		vspeed = 0;
+		alive = true;
 	}
 	void run(float targetx, float targety)
 	{
+		if(alive == true){
+		if(x < -800)
+		hspeed = 3;
+		if(x > 1600)
+		hspeed = -3;
+		if(y < -600)
+		vspeed = 3;
+		if(y > 1600)
+		vspeed = -3;
 		if(hspeed > 1)
 		hspeed = 1;
 		if(hspeed < -1)
@@ -63,6 +75,10 @@ class cEnemy
 		vspeed = 1;
 		if(vspeed < -1)
 		vspeed = -1;
+		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(14))
+		{
+			alive = false;
+		}
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(600))
 		{
 		if(x+8 > targetx+16)
@@ -84,7 +100,12 @@ class cEnemy
 		}
 		x +=hspeed;
 		y +=vspeed;
-		
+		}
+		else
+		{
+			x = -6000;
+			y = -6000;
+		}
 
 	}
 	//collision with other enemies
@@ -104,22 +125,25 @@ class cEnemy
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sEnemy)
 	{
+		if(alive == true)
+		{
 			renderTexture(sEnemy, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sEnemy,
                            col1,
                            col2,
                            col3);
+		}
 	}
 };
 
 class cSpawner
 {
 	public:
-	cEnemy oEnemy[10];
+	cEnemy oEnemy[8];
 	int enemyAmount;
 	void create(float startx, float starty)
 	{
-		enemyAmount = 10;
+		enemyAmount = 8;
 		for(int i = 0;i<enemyAmount;i++)
 		{
 			oEnemy[i].create(startx+(rand()%16),starty+(rand()%16));
@@ -151,7 +175,7 @@ class cSpawner
 class cRoomCreator
 {
 	public:
-	cBlock oBlock[176];
+	cBlock oBlock[48];
 	cSpawner oSpawner;
 	int blockAmount, blockNum;
 	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
@@ -164,7 +188,7 @@ class cRoomCreator
 		downWall = false;
 		leftWall = false;
 		roomFinished = false;
-		blockAmount = 176;
+		blockAmount = 48;
 		blockNum = 0;
 		roomWidth = rand()%12+1;
 		roomHeight = roomWidth = rand()%12+1;
@@ -182,6 +206,7 @@ class cRoomCreator
 	}
 	void generateRoom(float targetx, float targety)
 	{
+	if(roomFinished == true)
 	oSpawner.run(targetx, targety);
 	if(roomFinished == false){
 		//Start at top left, move in a rectangle, end at start
@@ -266,7 +291,7 @@ class cRoomCreator
 			}
 			else
 			{
-				roomFinished = false;
+				roomFinished = true;
 				leftWall = false;
 			}
 		}
@@ -295,10 +320,10 @@ class cMapMaker
 		cRoomCreator oMainRoom;
 	void create()
 	{
-		oMainRoom.create(-800,-600);
+		/*oMainRoom.create(-800,-600);
 		oMainRoom.roomWidth = 50;
 		oMainRoom.roomHeight = 38;
-		oMainRoom.randDoor = 500;
+		oMainRoom.randDoor = 500;*/
 		for(int i = 0;i<20;i++)
 		{
 			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
@@ -307,7 +332,7 @@ class cMapMaker
 	
 	void makeMap(float targetx, float targety)
 	{
-		oMainRoom.generateRoom(targetx, targety);
+		//oMainRoom.generateRoom(targetx, targety);
 		for(int i = 0;i<20;i++)
 		{
 			oRoomCreator[i].generateRoom(targetx, targety);
@@ -315,7 +340,7 @@ class cMapMaker
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock, SDL_Texture *sEnemy)
 	{
-		oMainRoom.draw(ren, sBlock,sEnemy);
+		//oMainRoom.draw(ren, sBlock,sEnemy);
 		for(int i = 0;i<20;i++)
 		{
 			oRoomCreator[i].draw(ren, sBlock, sEnemy);

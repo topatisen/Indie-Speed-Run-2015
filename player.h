@@ -36,8 +36,8 @@ class cPlayer
 		walkLeft = false;
 		walkUp = false;
 		walkDown = false;
-		x = 260;
-		y = 250;
+		x = 0;
+		y = 0;
 		vspeed = 0;
 		hspeed = 0;
 		//Create Code
@@ -80,7 +80,14 @@ class cPlayer
 			health += 0.5;
 		}
 		////
-		
+		if(x < -800)
+		hspeed = 2;
+		if(x > 800)
+		hspeed = -2;
+		if(y < -616)
+		vspeed = 2;
+		if(y > 600)
+		vspeed = -2;
 		//FRICTION FIXING
 		if(hspeed > 0)
 			hspeed -= 0.1;

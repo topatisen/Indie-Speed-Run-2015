@@ -133,28 +133,25 @@ mt.max();
 		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
-		//viewx = oPlayer.x;
-		//viewy = oPlayer.y;
+
 		
 		//Logical, magical!
-		oPlayer.run(event);
+			oPlayer.run(event);
 		oGame.run(keyboardstate);
 		
 		//run spawner
-		for(int i = 0; i<20;i++)
-		{
-			oMapMaker.oRoomCreator[i].oSpawner.run(oPlayer.x,oPlayer.y);
-		}
+		
 		//check collisions enemies -> blocks
+		
 		for(int t = 0; t<20;t++)
 		{
 		for(int p = 0; p<20;p++)
 		{
-			for(int i = 0; i<176;i++)
+			for(int i = 0; i<48;i++)
 			{
-				for(int g = 0; g<10;g++)
+				for(int g = 0; g<8;g++)
 				{
-					oMapMaker.oRoomCreator[t].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x+8, oMapMaker.oRoomCreator[p].oBlock[i].y+8,24);
+					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[t].oBlock[i].x+8, oMapMaker.oRoomCreator[t].oBlock[i].y+8,24);
 				}
 			}
 		}
@@ -165,14 +162,10 @@ mt.max();
 		//Check collisions for all blocks test
 		for(int p = 0; p<20;p++)
 		{
-			for(int i = 0; i<176;i++)
+			for(int i = 0; i<48;i++)
 			{
 				oPlayer.checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x, oMapMaker.oRoomCreator[p].oBlock[i].y);
 			}
-		}
-		for(int i = 0; i<176;i++)//mainroom collision check
-		{
-			oPlayer.checkCollision(oMapMaker.oMainRoom.oBlock[i].x, oMapMaker.oMainRoom.oBlock[i].y);
 		}
 		
 		
