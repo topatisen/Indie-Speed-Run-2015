@@ -137,8 +137,11 @@ mt.max();
 
 		
 		//Logical, magical!
-			oPlayer.run(event);
+			
 		oGame.run(keyboardstate);
+		if(oGame.state ==2)
+		{
+		oPlayer.run(event);
 		
 		//run spawner
 		
@@ -169,7 +172,7 @@ mt.max();
 			}
 		}
 		
-		
+		}
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
 		if( avgFPS > 2000000 )

@@ -5,7 +5,26 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-
+class cBullet
+{
+	public:
+		float x, y;
+	void create()
+	{
+		
+	}
+	void run()
+	{
+	}
+	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
+	{
+		renderTexture(sBullet, ren, x+viewx, y+viewy);
+		SDL_SetTextureColorMod(sPlayer,
+                           ammoR,
+                           ammoG,
+                           ammoB);
+	}
+};
 class cPlayer
 {
 	public:
