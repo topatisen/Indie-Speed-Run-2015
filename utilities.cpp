@@ -50,3 +50,14 @@ SDL_Texture *createTextMessage(TTF_Font *font, SDL_Color color, const char *mess
     return outMessage;
 }
 /*}}}*/
+
+/*{{{ Initialize random number generator */
+std::mt19937 generator(3);
+/*}}}*/
+
+/*{{{ Generate random number */
+unsigned long pRand(void)
+{
+	return generator();
+}
+/*}}}*/
