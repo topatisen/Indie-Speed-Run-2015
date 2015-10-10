@@ -39,7 +39,14 @@ class cGameState
 				case SDL_KEYUP:
 					if(event.key.keysym.sym==SDLK_ESCAPE)
 					{
-						state = 1;
+						if(state != 1)
+						{
+							state = 1;
+						} 
+						else if(state == 1)
+						{
+							state = 2;
+						}
 						break;
 					}
 				}
@@ -72,10 +79,11 @@ class cGameState
 					}
 				}
 			}
+		}
 	}
 	
 	// Draws to renderer
-	void draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
+	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
 	{
 		//Draw Code
 		// Draw the intro thingie
@@ -101,8 +109,7 @@ class cGameState
 		if (state == 3)
 		{
 			// Destroy stuff, exit
-			SDL_DestroyRenderer(renderer);
-			SDL_DestroyWindow(window);
+			SDL_DestroyRenderer(ren);
 			SDL_Quit();
 			return 0;
 		}
