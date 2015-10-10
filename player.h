@@ -81,6 +81,15 @@ class cPlayer
 	SDL_Rect rectOrig;
 	SDL_Rect rectNew;
 	
+	SDL_Rect ammoROrig;
+	SDL_Rect ammoRNew;
+
+	SDL_Rect ammoGOrig;
+	SDL_Rect ammoGNew;
+
+	SDL_Rect ammoBOrig;
+	SDL_Rect ammoBNew;
+
 	float x, y, vspeed, hspeed, enemyX, enemyY;
 	int ammoR, ammoG, ammoB;
 	bool walkRight, walkLeft, walkUp, walkDown;
@@ -91,13 +100,17 @@ class cPlayer
 		rectOrig.y = 0;
 		rectOrig.w = 32;
 		rectOrig.h = 32;
-		rectNew.x = 0;
-		rectNew.y = 0;
-		rectNew.w = 128;
-		rectNew.h = 16;
+
 		ammoR = 0;
 		ammoG = 255;
 		ammoB = 0;
+
+		ammoRNew.x = 15;
+		ammoRNew.y = 15;
+		ammoRNew.w = 128;
+		ammoRNew.h = 16;
+		ammoROrig.x = 0;
+
 		walkRight = false;
 		walkLeft = false;
 		walkUp = false;
@@ -240,6 +253,7 @@ class cPlayer
 		//Draw Code
 		//healthbar
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sHealthbar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
 		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
                            ammoR,
