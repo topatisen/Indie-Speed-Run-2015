@@ -40,12 +40,12 @@ class cPlayer
 			hspeed = 0.5;
 		}
 		//Check Up
-		if(x+32 > enemyX&&x < enemyX+30&&y<enemyY+32&&y>enemyY+28)
+		if(x+30 > enemyX&&x < enemyX+30&&y<enemyY+32&&y>enemyY+28)
 		{
 				vspeed = 0.5;
 		}
 		//Check Down
-		if(x+32 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4)
+		if(x+30 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4)
 		{
 			vspeed = -0.5;
 		}
