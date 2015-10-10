@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
 	
 	//{/* {{{ Textures */
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	//}/* }}} */
 	
@@ -144,9 +145,10 @@ int main(int argc, char *argv[]) {
 			
 			renderTexture(sBackground, renderer, 0, 0);
 			
-			//Player
-			oPlayer.draw(renderer, sRectangle);
+			
 			oBlockCreator.draw(renderer, sRectangle);//new sprite later
+			//Player
+			oPlayer.draw(renderer, sPlayer);
 			
 			renderTexture(msgInfo, renderer, 10, 10);
 			

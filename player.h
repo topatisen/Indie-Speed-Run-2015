@@ -18,7 +18,7 @@ class cPlayer
 		walkLeft = false;
 		walkUp = false;
 		walkDown = false;
-		x = 300;
+		x = 260;
 		y = 250;
 		vspeed = 0;
 		hspeed = 0;
@@ -30,25 +30,25 @@ class cPlayer
 		//Check left side
 		enemyX = x2 ;
 		enemyY = y2 ;
-		if(x+32 > enemyX&&x+32 < enemyX+4&&y+30 > enemyY&&y< enemyY+30)
+		if(x<enemyX+2&&y<enemyY)
 		{
-				hspeed = -0.5;
-		}
+				vspeed = -0.5;
+		}/*
 		//Check right side
-		if(x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+30)
+		if((x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+30))
 		{
 			hspeed = 0.5;
 		}
 		//Check Up
-		if(x+30 > enemyX&&x < enemyX+30&&y<enemyY+32&&y>enemyY+28)
+		if((x+30 > enemyX&&x < enemyX+30&&y<enemyY+32&&y>enemyY+28))
 		{
 				vspeed = 0.5;
 		}
 		//Check Down
-		if(x+30 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4)
+		if((x+30 > enemyX&&x < enemyX+30&&y+32 > enemyY&&y+32<enemyY+4))
 		{
 			vspeed = -0.5;
-		}
+		}*/
 	}
 	void run(SDL_Event event)
 	{
@@ -79,27 +79,6 @@ class cPlayer
 		if(walkDown == true)
 		{
 				vspeed = 1;
-		}
-		//Collision
-		if(colUp == true)
-		{
-			y -= 2;
-			colUp = false;
-		}
-		if(colDown == true)
-		{
-			y += 2;
-			colDown = false;
-		}
-		if(colRight == true)
-		{
-			x -= 2;
-			colRight = false;
-		}
-		if(colLeft == true)
-		{
-			x += 2;
-			colLeft = false;
 		}
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
@@ -158,6 +137,10 @@ class cPlayer
 	{
 		//Draw Code
 		renderTexture(sPlayer, ren, x, y);
+		SDL_SetTextureColorMod(sPlayer,
+                           0,
+                           128,
+                           0);
 	}
 };
 
