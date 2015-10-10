@@ -112,10 +112,12 @@ int main(int argc, char *argv[]) {
 		oPlayer.run(event);
 		
 		//Check collisions for all blocks test
-		for(int i = 0; i<10;i++)
+		for(int i = 0; i<oBlockCreator.blockAmount;i++)
 		{
 			oPlayer.checkCollision(oBlockCreator.oBlock[i].x, oBlockCreator.oBlock[i].y);
 		}
+		
+		oBlockCreator.generateRoom();
 		
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
