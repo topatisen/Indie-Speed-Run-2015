@@ -75,25 +75,26 @@ class cEnemy
 		vspeed = 1;
 		if(vspeed < -1)
 		vspeed = -1;
-		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(14))
+		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(24))
 		{
+			playerHealth -= 20;
 			alive = false;
 		}
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(600))
 		{
-		if(x+8 > targetx+16)
+		if(x+8 > targetx)
 		{
 			hspeed -= 0.25;
 		}
-		if(x+8 < targetx+16)
+		if(x+8 < targetx)
 		{
 			hspeed += 0.25;
 		}
-		if(y+8 < targety+16)
+		if(y+8 < targety)
 		{
 			vspeed += 0.25;
 		}
-		if(y+8 > targety+16)
+		if(y+8 > targety)
 		{
 			vspeed -= 0.25;
 		}

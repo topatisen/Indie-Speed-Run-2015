@@ -14,7 +14,7 @@ class cPlayer
 	SDL_Rect rectOrig;
 	SDL_Rect rectNew;
 	
-	float x, y, vspeed, hspeed, enemyX, enemyY, health;
+	float x, y, vspeed, hspeed, enemyX, enemyY;
 	int ammoR, ammoG, ammoB;
 	bool walkRight, walkLeft, walkUp, walkDown;
 	bool colRight, colLeft, colUp, colDown;//col = collision
@@ -28,7 +28,6 @@ class cPlayer
 		rectNew.y = 0;
 		rectNew.w = 128;
 		rectNew.h = 16;
-		health = 0;
 		ammoR = 0;
 		ammoG = 255;
 		ammoB = 0;
@@ -73,11 +72,11 @@ class cPlayer
 		//healthbar
 		rectNew.x = x-16+viewx;
 		rectNew.y = y-32+viewy;
-		rectNew.w = health*0.64;
+		rectNew.w = playerHealth*0.64;
 		rectNew.h = 16;
-		if(health < 100)
+		if(playerHealth < 100)
 		{
-			health += 0.5;
+			playerHealth += 0.25;
 		}
 		////
 		if(x < -800)

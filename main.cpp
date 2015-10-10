@@ -19,6 +19,7 @@ using namespace std;
 
 float viewx = 0;
 float viewy = 0;
+float playerHealth;
 #include "utilities.h"
 #include "gamestate.h"
 #include "player.h" //player-header
@@ -36,7 +37,7 @@ const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 
 int main(int argc, char *argv[]) {
-
+playerHealth = 0;
 std::mt19937 mt(1);
 std::uniform_int_distribution<int32_t> intDist(1,2);
 mt.max();
@@ -158,7 +159,7 @@ mt.max();
 		}
 		viewx = 400+(-oPlayer.x);
 		viewy = 300+(-oPlayer.y);
-		oMapMaker.makeMap(oPlayer.x, oPlayer.y);
+		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
 		//Check collisions for all blocks test
 		for(int p = 0; p<20;p++)
 		{
