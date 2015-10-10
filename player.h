@@ -8,21 +8,69 @@
 class cBullet
 {
 	public:
-		float x, y;
+		float x, y, hspeed, vspeed;
+		int color1, color2, color3;
+		bool alive, isFired;
 	void create()
 	{
-		
+		isFired = false;
+		alive = false;
+		x = -6000;
+		y = -6000;
+		color1 = 0;
+		color2 = 0;
+		color3 = 0;
 	}
 	void run()
 	{
+		if(alive == false)
+		{
+			x = -6000;
+			y = -6000;
+		}
+		if(x < -800)
+		hspeed = 2;
+		if(x > 800)
+		hspeed = -2;
+		if(y < -616)
+		vspeed = 2;
+		if(y > 600)
+		vspeed = -2;
+	}
+	void shoot(int direction, int col1, int col2, int col3)
+	{
+		if(isFired == false)
+		{
+		//direction clockwise starts up 1,2,3,4
+		if(direction == 1)
+		{
+			vspeed = -8;
+		}
+		if(direction == 2)
+		{
+			hspeed = 8;
+		}
+		if(direction == 3)
+		{
+			vspeed = 8;
+		}
+		if(direction == 4)
+		{
+			hspeed = -8;
+		}
+		color1 = col1;
+		color2 = col2;
+		color3 = col3;
+		isFired = true;
+		}
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
 	{
 		renderTexture(sBullet, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sBullet,
-                           128,
-                           128,
-                           128);
+                           col1,
+                           col2,
+                           col3);
 	}
 };
 class cPlayer
