@@ -9,11 +9,14 @@ class cPlayer
 {
 	public:
 	float x, y, vspeed, hspeed, enemyX, enemyY;
-	
+	int ammoR, ammoG, ammoB;
 	bool walkRight, walkLeft, walkUp, walkDown;
 	bool colRight, colLeft, colUp, colDown;//col = collision
 	void create()
 	{
+		ammoR = 0;
+		ammoG = 255;
+		ammoB = 0;
 		walkRight = false;
 		walkLeft = false;
 		walkUp = false;
@@ -53,14 +56,14 @@ class cPlayer
 	void run(SDL_Event event)
 	{
 		//FRICTION FIXING
-		if(hspeed > 0)
+		/*if(hspeed > 0)
 			hspeed -= 0.1;
 		if(hspeed < 0)
 			hspeed += 0.1;
 		if(vspeed < 0)
 			vspeed += 0.1;
 		if(vspeed > 0)
-			vspeed -= 0.1;
+			vspeed -= 0.1;*/
 		//Logic code
 		x += hspeed;
 		y += vspeed;
@@ -138,9 +141,9 @@ class cPlayer
 		//Draw Code
 		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
-                           0,
-                           255,
-                           255);
+                           ammoR,
+                           ammoG,
+                           ammoB);
 	}
 };
 
