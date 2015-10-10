@@ -15,7 +15,7 @@ class cGame
 	 * 3 = exit
 	*/
 	int gameState;
-	int 
+	int playerPoints[2];
 	
 	void create()
 	{
