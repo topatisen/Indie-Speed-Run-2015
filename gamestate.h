@@ -43,6 +43,10 @@ class cGameState
 			{
 				state = 2;
 			}
+			else if(state == 3)
+			{
+				state == 1;
+			}
 			SDL_Delay(130);
 		}
 		// If we're in the menu
@@ -51,100 +55,48 @@ class cGameState
 			if(keyboardstate[SDL_SCANCODE_UP])
 			{
 				menuPosition--;
-				if (menuPosition < 0)
+				if (menuPosition < 1)
 				{
 					menuPosition = 4;
 				}
 				else if (menuPosition > 4)
 				{
-					menuPosition = 0;
+					menuPosition = 1;
 				}
 				SDL_Delay(130);
 			}
 			if(keyboardstate[SDL_SCANCODE_DOWN])
 			{
 				menuPosition++;
-				if (menuPosition < 0)
+				if (menuPosition < 1)
 				{
 					menuPosition = 4;
 				}
 				else if (menuPosition > 4)
 				{
-					menuPosition = 0;
+					menuPosition = 1;
 				}
 				SDL_Delay(130);
 			}
 			if(keyboardstate[SDL_SCANCODE_RETURN])
 			{
-  				if(menuPosition == 4)
+				if(menuPosition == 2)
+				{
+					state = 2;
+				}
+				else if(menuPosition == 3)
+				{
+					state = 3;
+				}
+				else if(menuPosition == 4)
 				{
 					state = 4;
 				}
 			}
 		}
 	}
-  	/*
-  	int run(SDL_Event event){
-  		//KEYPRESSTEST
-  		while (SDL_PollEvent(&event)) {
-  			//Kepresses, works like a charm! <3<3<3<3<3
-} 			switch(event.type){
-				case SDL_KEYUP:
-					if(event.key.keysym.sym==SDLK_ESCAPE)
-					{
-						if(state != 1)
-						{
-							state = 1;
-						} 
-						else if(state == 1)
-						{
-							state = 2;
-						}
-						break;
-					}
-				}
-		}
-		if(state == 1) {
-			switch(event.type) {
-			case SDL_KEYUP:
-				if (event.key.keysym.sym == SDLK_UP)
-				{
-					menuPosition--;
-					if (menuPosition < 0)
-					{
-						menuPosition = 4;
-					}
-					else if (menuPosition > 4)
-					{
-						menuPosition = 0;
-					}
-				}
-				if (event.key.keysym.sym == SDLK_DOWN)
-				{
-					menuPosition++;
-					if (menuPosition < 0)
-					{
-						menuPosition = 4;
-					}
-					else if (menuPosition > 4)
-					{
-						menuPosition = 0;
-					}
-				}
-				if(event.key.keysym.sym == SDLK_RETURN)
-				{
-					if(menuPosition == 4)
-					{
-						state = 4;
-					}
-				}
-			}
-		}
-	}
-	*/
-
 	// Draws to renderer
-	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
+	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector, SDL_Texture *sAboutOverlay)
 	{
 		//Draw Code
 		// Draw the intro thingie
@@ -152,6 +104,7 @@ class cGameState
 		{
 			// Draw intro here
 			// Currently, skip directly to menu
+			state = 1;
 		}
 		
 		// Draw menu if we're in the pause/menu state
@@ -165,6 +118,11 @@ class cGameState
 		if(state == 2)
 		{
 			// Draw points and overlay here
+		}
+
+		if(state == 3)
+		{
+			renderTexture(sAboutOverlay, ren, 0, 0);
 		}
 
 	}
