@@ -10,35 +10,28 @@ class cGameState
 	public:
 	/* Gamestates
 	 * 0 = intro
-	 * 1 = pause/menu
+	 * 1 = main menu
 	 * 2 = playing
-	 * 3 = exit
+	 * 3 = about
+	 * 4 = exit
 	*/
 	int state;
 	int playerOnePoints;
 	int playerTwoPoints;
+	int menuPosition;
 	
 	void create()
 	{
-		// Initialize points to 0
+		// Initialize variables
 		playerOnePoints = 0;
 		playerTwoPoints = 0;
+		menuPosition = 0;
 		// First state is intro
 		state = 0;
 	}
 
-	void pause()
-	{
-		state = 1;
-	}
-
-	void resume()
-	{
-		state = 2;
-	}
-
 	// Handles events
-	void run(SDL_Event event)
+	int run(SDL_Event event)
 	{
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
@@ -47,44 +40,86 @@ class cGameState
 				case SDL_KEYUP:
 					if(event.key.keysym.sym==SDLK_ESCAPE)
 					{
-						state = 1;
+						if(state != 1)
+						{
+							state = 1;
+						} 
+						else if(state == 1)
+						{
+							state = 2;
+						}
 						break;
 					}
 				}
 		}
-		if(gameState == 1) {
+		if(state == 1) {
 			switch(event.type) {
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP)
 				{
-
+					menuPosition--;
+					if (menuPosition < 0)
+					{
+						menuPosition = 4;
+					}
+					else if (menuPosition > 4)
+					{
+						menuPosition = 0;
+					}
 				}
+				if (event.key.keysym.sym == SDLK_DOWN)
+				{
+					menuPosition++;
+					if (menuPosition < 0)
+					{
+						menuPosition = 4;
+					}
+					else if (menuPosition > 4)
+					{
+						menuPosition = 0;
+					}
+				}
+				if(event.key.keysym.sym == SDLK_RETURN)
+				{
+					if(menuPosition == 4)
+					{
+						SDL_Quit();
+						return 0;
+					}
+				}
+			}
+		}
 	}
-	
+
 	// Draws to renderer
-	void draw(SDL_Renderer *ren)
+	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
 	{
 		//Draw Code
 		// Draw the intro thingie
-		if (gameState == 0)
+		if (state == 0)
 		{
 			// Draw intro here
+			// Currently, skip directly to menu
 		}
 		
 		// Draw menu if we're in the pause/menu state
-		if(gameState == 1)
+		if(state == 1)
 		{
+			renderTexture(sMenuOverlay, ren, 0, 0);
+			renderTexture(sMenuSelector, ren, 0, menuPosition*100);
 			//Draw menu here
 		}
 
-		if(gameState == 2)
+		if(state == 2)
 		{
 			// Draw points and overlay here
 		}
 
-		if (gameState == 3)
+		if (state == 3)
 		{
 			// Destroy stuff, exit
+			SDL_DestroyRenderer(ren);
+			SDL_Quit();
 			return 0;
 		}
 

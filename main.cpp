@@ -19,6 +19,7 @@ using namespace std;
 #include "utilities.h"
 #include "player.h" //player-header
 #include "block.h" //block-header, also dungeon generator
+#include "gamestate.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -78,10 +79,12 @@ int main(int argc, char *argv[]) {
 	SDL_Event e;
 	//}/* }}} */
 	
-	//{/* {{{ Textures */
+	/* {{{ Textures */
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
-	//}/* }}} */
+	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
+	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
+	/* }}} */
 	
 	float avgFPS = 0;
 	SDL_Event event;
@@ -89,27 +92,29 @@ int main(int argc, char *argv[]) {
 	cPlayer oPlayer;
 	oPlayer.create();
 	
+	// Gamestate test
+	cGameState oGame;
+	oGame.create();
 	//Block test
 	cBlockCreator oBlockCreator;
 	oBlockCreator.create();
 	
 	//while not quitting (gameloop)
-	while(!quit) {
+	while(oGame.state != 4) {
 		//fps
 		int frameTicks = capTimer.getTicks();
 	
 		// Empty event queueueueueu
 		SDL_PumpEvents();
 		
-		//{/* {{{ Keyboard presses, mouse events osv.*/
+		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
-		//quit
-		if (state[SDL_SCANCODE_ESCAPE]){
-			quit = true;
-		}
+
+		oGame.run(event);
 		
 		//Logical, magical!
 		oPlayer.run(event);
+		
 		
 		//Check collisions for all blocks test
 		for(int i = 0; i<oBlockCreator.blockAmount;i++)
@@ -131,19 +136,21 @@ int main(int argc, char *argv[]) {
 
 		//If frame finished early
 		
-		//{/* {{{ DRAW */
+		/* {{{ DRAW */
 		if( frameTicks < SCREEN_TICK_PER_FRAME )
 		{
 			//Wait remaining time
 			//SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 			
 			
-			//{/* {{{ DRAW HERE */
+			/* {{{ DRAW HERE */
 			// Draw background
 			
 			
 			renderTexture(sBackground, renderer, 0, 0);
 			
+			// Menu and points and stuff
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector);
 			//Player
 			oPlayer.draw(renderer, sRectangle);
 			oBlockCreator.draw(renderer, sRectangle);//new sprite later
@@ -154,7 +161,7 @@ int main(int argc, char *argv[]) {
 			//render texture
 			SDL_RenderPresent(renderer);
 		}
-		//}/* }}} */
+		/* }}} */
 	}
 	
 	//destroy everything
