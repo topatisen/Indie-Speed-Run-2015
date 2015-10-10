@@ -102,6 +102,9 @@ mt.max();
 	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sHealthbar = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sRBar = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sGBar = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sBBar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
@@ -203,7 +206,7 @@ mt.max();
 
 			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
 			//Player
-			oPlayer.draw(renderer, sPlayer,sHealthbar);
+			oPlayer.draw(renderer, sPlayer,sHealthbar, sRBar, sGBar, sBBar);
 			
 			//oSpawner.draw(renderer, sEnemy);
 			

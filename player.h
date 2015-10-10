@@ -107,15 +107,39 @@ class cPlayer
 		rectNew.h = 16;
 
 
-		ammoR = 0;
+		ammoR = 175;
 		ammoG = 255;
-		ammoB = 0;
+		ammoB = 12;
 
-		ammoRNew.x = 15;
-		ammoRNew.y = 15;
+		ammoRNew.x = 0;
+		ammoRNew.y = 0;
 		ammoRNew.w = 128;
 		ammoRNew.h = 16;
+
 		ammoROrig.x = 0;
+		ammoROrig.y = 0;
+		ammoROrig.w = 32;
+		ammoROrig.h = 32;
+
+		ammoGNew.x = 0;
+		ammoGNew.y = 0;
+		ammoGNew.w = 128;
+		ammoGNew.h = 16;
+
+		ammoGOrig.x = 0;
+		ammoGOrig.y = 0;
+		ammoGOrig.w = 32;
+		ammoGOrig.h = 32;
+
+		ammoBNew.x = 0;
+		ammoBNew.y = 0;
+		ammoBNew.w = 128;
+		ammoBNew.h = 16;
+
+		ammoBOrig.x = 0;
+		ammoBOrig.y = 0;
+		ammoBOrig.w = 32;
+		ammoBOrig.h = 32;
 
 		walkRight = false;
 		walkLeft = false;
@@ -160,6 +184,24 @@ class cPlayer
 		rectNew.y = y-32+viewy;
 		rectNew.w = playerHealth*0.64;
 		rectNew.h = 16;
+
+		// Ammo bars
+		// red
+		ammoRNew.x = x-64+viewx+256;
+		ammoRNew.y = y-64+viewy;
+		ammoRNew.w = ammoR*0.64;
+		ammoRNew.h = 16;
+		// green
+		ammoGNew.x = x-64+viewx+256;
+		ammoGNew.y = y-64+viewy+16;
+		ammoGNew.w = ammoG*0.64;
+		ammoGNew.h = 16;	
+		// blue
+		ammoBNew.x = x-64+viewx+256;
+		ammoBNew.y = y-64+viewy+32;
+		ammoBNew.w = ammoB*0.64;
+		ammoBNew.h = 16;	
+
 		if(playerHealth < 100)
 		{
 			playerHealth += 0.25;
@@ -254,17 +296,23 @@ class cPlayer
 			}	
 		}
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar)
+	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar)
 	{
 		//Draw Code
 		//healthbar
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
-		SDL_RenderCopyEx(ren, sHealthbar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
+		// Ammobars
+		SDL_RenderCopyEx(ren, sRBar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sBBar, &ammoGOrig, &ammoGNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sBBar, &ammoBOrig, &ammoBNew,0,NULL,SDL_FLIP_NONE);
 		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
                            ammoR,
                            ammoG,
                            ammoB);
+		SDL_SetTextureColorMod(sRBar,255,0,0);
+		SDL_SetTextureColorMod(sGBar,0,255,0);
+		SDL_SetTextureColorMod(sBBar,0,0,255);
 	}
 };
 
