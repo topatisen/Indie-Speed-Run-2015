@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 		}
 		
 		//Logical, magical!
-		oPlayer.run();
+		oPlayer.run(event);
 		
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
