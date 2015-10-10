@@ -52,7 +52,7 @@ SDL_Texture *createTextMessage(TTF_Font *font, SDL_Color color, const char *mess
 /*}}}*/
 
 /*{{{ Initialize random number generator */
-std::mt19937 generator(1452689745);
+std::mt19937 generator(145);
 /*}}}*/
 
 /*{{{ Generate random number */

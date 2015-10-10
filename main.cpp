@@ -121,8 +121,6 @@ mt.max();
 	cMapMaker oMapMaker;
 	oMapMaker.create();
 	
-	cSpawner oSpawner;
-	oSpawner.create();
 	
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
@@ -142,12 +140,28 @@ mt.max();
 		oPlayer.run(event);
 		oGame.run(keyboardstate);
 		
-		oSpawner.run(oPlayer.x+16,oPlayer.y+16);
-		
-		
+		//run spawner
+		for(int i = 0; i<20;i++)
+		{
+			oMapMaker.oRoomCreator[i].oSpawner.run(oPlayer.x,oPlayer.y);
+		}
+		//check collisions enemies -> blocks
+		for(int t = 0; t<20;t++)
+		{
+		for(int p = 0; p<20;p++)
+		{
+			for(int i = 0; i<176;i++)
+			{
+				for(int g = 0; g<10;g++)
+				{
+					oMapMaker.oRoomCreator[t].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x+8, oMapMaker.oRoomCreator[p].oBlock[i].y+8,24);
+				}
+			}
+		}
+		}
 		viewx = 400+(-oPlayer.x);
 		viewy = 300+(-oPlayer.y);
-		oMapMaker.makeMap();
+		oMapMaker.makeMap(oPlayer.x, oPlayer.y);
 		//Check collisions for all blocks test
 		for(int p = 0; p<10;p++)
 		{
@@ -190,11 +204,11 @@ mt.max();
 			// Menu and points and stuff
 			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
 
-			oMapMaker.draw(renderer, sRectangle);//new sprite later
+			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
 			//Player
 			oPlayer.draw(renderer, sPlayer,sHealthbar);
 			
-			oSpawner.draw(renderer, sEnemy);
+			//oSpawner.draw(renderer, sEnemy);
 			
 			renderTexture(msgInfo, renderer, 10, 10);
 			

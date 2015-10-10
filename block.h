@@ -37,11 +37,122 @@ class cBlock
 };
 
 //Block creator, 
+//Enemytest class
+class cEnemy
+{
+	public:
+		float x, y, vspeed, hspeed, col1, col2, col3,
+				dx, dy;
+	void create(float startx, float starty)
+	{
+		col1 = 128;
+		col2 = 32;
+		col3 = 0;
+		x = startx;
+		y = starty;
+		hspeed = 0;
+		vspeed = 0;
+	}
+	void run(float targetx, float targety)
+	{
+		if(hspeed > 1)
+		hspeed = 1;
+		if(hspeed < -1)
+		hspeed = -1;
+		if(vspeed > 1)
+		vspeed = 1;
+		if(vspeed < -1)
+		vspeed = -1;
+		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(600))
+		{
+		if(x+8 > targetx+16)
+		{
+			hspeed -= 0.25;
+		}
+		if(x+8 < targetx+16)
+		{
+			hspeed += 0.25;
+		}
+		if(y+8 < targety+16)
+		{
+			vspeed += 0.25;
+		}
+		if(y+8 > targety+16)
+		{
+			vspeed -= 0.25;
+		}
+		}
+		x +=hspeed;
+		y +=vspeed;
+		
 
+	}
+	//collision with other enemies
+	void checkCollision(float otherx, float othery,float otherradius)
+	{
+		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
+		{
+			if(x >= otherx)
+			hspeed += ((otherx-x)*(otherx-x)/80);
+			if(x <= otherx)
+			hspeed -= ((otherx-x)*(otherx-x)/80);
+			if(y >= othery)
+			vspeed += ((othery-y)*(othery-y)/80);
+			if(y <= othery)
+			vspeed -= ((othery-y)*(othery-y)/80);
+		}
+	}
+	void draw(SDL_Renderer *ren, SDL_Texture *sEnemy)
+	{
+			renderTexture(sEnemy, ren, x+viewx, y+viewy);
+		SDL_SetTextureColorMod(sEnemy,
+                           col1,
+                           col2,
+                           col3);
+	}
+};
+
+class cSpawner
+{
+	public:
+	cEnemy oEnemy[10];
+	int enemyAmount;
+	void create(float startx, float starty)
+	{
+		enemyAmount = 10;
+		for(int i = 0;i<enemyAmount;i++)
+		{
+			oEnemy[i].create(startx+(rand()%16),starty+(rand()%16));
+		}
+	}
+	void run(float targetx, float targety)
+	{
+		
+		for(int i = 0;i<enemyAmount;i++)
+		{
+			oEnemy[i].run(targetx,targety);
+		}
+		for(int i = 0;i<enemyAmount;i++)
+		{
+			for(int p = 0;p<enemyAmount;p++)
+			{
+				oEnemy[i].checkCollision(oEnemy[p].x,oEnemy[p].y,4);
+			}
+		}
+	}
+	void draw(SDL_Renderer *ren, SDL_Texture *sEnemy)
+	{
+		for(int i = 0;i<enemyAmount;i++)
+		{
+			oEnemy[i].draw(ren,sEnemy);
+		}
+	}
+};
 class cRoomCreator
 {
 	public:
 	cBlock oBlock[176];
+	cSpawner oSpawner;
 	int blockAmount, blockNum;
 	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
 	int col1, col2, col3;
@@ -56,20 +167,22 @@ class cRoomCreator
 		blockAmount = 176;
 		blockNum = 0;
 		roomWidth = pRand()%12+1;
-		roomHeight = roomWidth = pRand()%12+1;
-		randDoor = (pRand()%(roomWidth+roomHeight)+1); 
+		roomHeight = roomWidth = rand()%12+1;
+		randDoor = (rand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
 		blocky = y1;
-		col1 = pRand()%234+20;
-		col2 = pRand()%234+20;
-		col3 = pRand()%234+20;
+		col1 = rand()%234+20;
+		col2 = rand()%234+20;
+		col3 = rand()%234+20;
 		for(int i = 0;i<blockAmount;i++)
 		{
 			oBlock[i].create(blockx+viewx, blocky+viewy,col1,col2,col3);
 		}
+		oSpawner.create(x1+((roomWidth/2)*32),y1+((roomHeight/2)*32));
 	}
-	void generateRoom()
+	void generateRoom(float targetx, float targety)
 	{
+	oSpawner.run(targetx, targety);
 	if(roomFinished == false){
 		//Start at top left, move in a rectangle, end at start
 		if(topWall == true)
@@ -158,9 +271,14 @@ class cRoomCreator
 			}
 		}
 	}
-	};
-	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
+	else
 	{
+		
+	}
+	};
+	void draw(SDL_Renderer *ren, SDL_Texture *sBlock, SDL_Texture *sEnemy)
+	{
+		oSpawner.draw(ren, sEnemy);
 		for(int i = 0;i<blockNum;i++)
 		{
 			oBlock[i].draw(ren, sBlock);
@@ -173,7 +291,7 @@ class cRoomCreator
 class cMapMaker
 {
 	public:
-		cRoomCreator oRoomCreator[10];
+		cRoomCreator oRoomCreator[20];
 		cRoomCreator oMainRoom;
 	void create()
 	{
@@ -181,26 +299,26 @@ class cMapMaker
 		oMainRoom.roomWidth = 50;
 		oMainRoom.roomHeight = 38;
 		oMainRoom.randDoor = 500;
-		for(int i = 0;i<10;i++)
+		for(int i = 0;i<20;i++)
 		{
 			oRoomCreator[i].create(-800+pRand()%1599+1,-600+pRand()%1199+1);
 		}
 	}
 	
-	void makeMap()
+	void makeMap(float targetx, float targety)
 	{
-		oMainRoom.generateRoom();
-		for(int i = 0;i<10;i++)
+		oMainRoom.generateRoom(targetx, targety);
+		for(int i = 0;i<20;i++)
 		{
-			oRoomCreator[i].generateRoom();
+			oRoomCreator[i].generateRoom(targetx, targety);
 		}
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
+	void draw(SDL_Renderer *ren, SDL_Texture *sBlock, SDL_Texture *sEnemy)
 	{
-		oMainRoom.draw(ren, sBlock);
-		for(int i = 0;i<10;i++)
+		oMainRoom.draw(ren, sBlock,sEnemy);
+		for(int i = 0;i<20;i++)
 		{
-			oRoomCreator[i].draw(ren, sBlock);
+			oRoomCreator[i].draw(ren, sBlock, sEnemy);
 		}
 	}
 };
