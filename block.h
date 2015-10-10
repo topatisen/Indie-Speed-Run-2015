@@ -12,9 +12,9 @@ class cBlock
 		int x, y,basecol,color1, color2, color3;
 	void create(float x1, float y1,int col1, int col2, int col3 )
 	{
-		color1 = 251;
-		color2 = 0;
-		color3 = 0;
+		color1 = col1+(-20)+rand()%19+1;
+		color2 = col2+(-20)+rand()%19+1;
+		color3 = col2+(-20)+rand()%19+1;
 		x = x1;
 		y = y1;
 		x = x - (x%32);
@@ -60,9 +60,9 @@ class cRoomCreator
 		randDoor = (rand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
 		blocky = y1;
-		col1 = rand()%244+10;
-		col2 = rand()%244+10;
-		col3 = rand()%244+10;
+		col1 = rand()%234+20;
+		col2 = rand()%234+20;
+		col3 = rand()%234+20;
 		for(int i = 0;i<blockAmount;i++)
 		{
 			oBlock[i].create(blockx+viewx, blocky+viewy,col1,col2,col3);
