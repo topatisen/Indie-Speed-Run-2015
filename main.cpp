@@ -17,6 +17,7 @@ using namespace std;
 
 #include "timer.h"
 #include "utilities.h"
+#include "player.h" //player-header
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -83,6 +84,9 @@ int main(int argc, char *argv[]) {
 	
 	float avgFPS = 0;
 	SDL_Event event;
+
+	cPlayer oPlayer;
+	oPlayer.create();
 	
 	
 	//while not quitting (gameloop)
@@ -99,6 +103,9 @@ int main(int argc, char *argv[]) {
 		if (state[SDL_SCANCODE_ESCAPE]){
 			quit = true;
 		}
+		
+		//Logical, magical!
+		oPlayer.run();
 		
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
@@ -121,7 +128,12 @@ int main(int argc, char *argv[]) {
 			
 			//{/* {{{ DRAW HERE */
 			// Draw background
+			
+			
 			renderTexture(sBackground, renderer, 0, 0);
+			
+			//Player
+			oPlayer.draw(renderer, sRectangle);
 			
 			renderTexture(msgInfo, renderer, 10, 10);
 			
