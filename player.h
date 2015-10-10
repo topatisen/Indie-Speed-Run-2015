@@ -56,14 +56,14 @@ class cPlayer
 	void run(SDL_Event event)
 	{
 		//FRICTION FIXING
-		/*if(hspeed > 0)
+		if(hspeed > 0)
 			hspeed -= 0.1;
 		if(hspeed < 0)
 			hspeed += 0.1;
 		if(vspeed < 0)
 			vspeed += 0.1;
 		if(vspeed > 0)
-			vspeed -= 0.1;*/
+			vspeed -= 0.1;
 		//Logic code
 		x += hspeed;
 		y += vspeed;

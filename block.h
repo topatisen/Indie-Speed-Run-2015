@@ -9,10 +9,12 @@
 class cBlock
 {
 	public:
-		int x, y;
-	void create(float x1, float y1)
+		int x, y,basecol,color1, color2, color3;
+	void create(float x1, float y1,int col1, int col2, int col3 )
 	{
-		
+		color1 = col1+(rand%(col1/2)+1;
+		color2 = 0;
+		color3 = 0;
 		x = x1;
 		y = y1;
 		x = x - (x%32);
@@ -27,6 +29,10 @@ class cBlock
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
 		renderTexture(sBlock, ren, x+viewx, y+viewy);
+		SDL_SetTextureColorMod(sPlayer,
+                           color1,
+                           color2,
+                           color3);
 	}
 };
 
@@ -38,6 +44,7 @@ class cRoomCreator
 	cBlock oBlock[176];
 	int blockAmount, blockNum;
 	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
+	int col1, col2, col3;
 	bool topWall, rightWall, downWall, leftWall, roomFinished;
 	void create(float x1, float y1)
 	{
@@ -53,6 +60,9 @@ class cRoomCreator
 		randDoor = (rand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
 		blocky = y1;
+		col1 = rand()%244+10;
+		col2 = rand()%244+10;
+		col3 = rand()%244+10;
 		for(int i = 0;i<blockAmount;i++)
 		{
 			oBlock[i].create(blockx+viewx, blocky+viewy);
