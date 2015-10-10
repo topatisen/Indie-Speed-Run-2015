@@ -17,24 +17,16 @@ class cGameState
 	int state;
 	int playerOnePoints;
 	int playerTwoPoints;
+	int menuPosition;
 	
 	void create()
 	{
-		// Initialize points to 0
+		// Initialize variables
 		playerOnePoints = 0;
 		playerTwoPoints = 0;
+		menuPosition = 0;
 		// First state is intro
 		state = 0;
-	}
-
-	void pause()
-	{
-		state = 1;
-	}
-
-	void resume()
-	{
-		state = 2;
 	}
 
 	// Handles events
@@ -52,39 +44,66 @@ class cGameState
 					}
 				}
 		}
-		if(gameState == 1) {
+		if(state == 1) {
 			switch(event.type) {
 			case SDL_KEYUP:
 				if (event.key.keysym.sym == SDLK_UP)
 				{
-
+					menuPosition--;
+					if (menuPosition < 0)
+					{
+						menuPosition = 3;
+					}
+					else if (menuPosition > 3)
+					{
+						menuPosition = 0;
+					}
 				}
+				if (event.key.keysym.sym == SDLK_DOWN)
+				{
+					menuPosition++;
+					if (menuPosition < 0)
+					{
+						menuPosition = 3;
+					}
+					else if (menuPosition > 3)
+					{
+						menuPosition = 0;
+					}
+				}
+			}
 	}
 	
 	// Draws to renderer
-	void draw(SDL_Renderer *ren)
+	void draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
 	{
 		//Draw Code
 		// Draw the intro thingie
-		if (gameState == 0)
+		if (state == 0)
 		{
 			// Draw intro here
+			// Currently, skip directly to menu
 		}
 		
 		// Draw menu if we're in the pause/menu state
-		if(gameState == 1)
+		if(state == 1)
 		{
+			renderTexture(sMenuOverlay, ren, 0, 0);
+			renderTexture(sMenuSelector, ren, 0, menuPosition*32);
 			//Draw menu here
 		}
 
-		if(gameState == 2)
+		if(state == 2)
 		{
 			// Draw points and overlay here
 		}
 
-		if (gameState == 3)
+		if (state == 3)
 		{
 			// Destroy stuff, exit
+			SDL_DestroyRenderer(renderer);
+			SDL_DestroyWindow(window);
+			SDL_Quit();
 			return 0;
 		}
 

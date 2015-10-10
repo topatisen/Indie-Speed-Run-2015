@@ -81,6 +81,8 @@ int main(int argc, char *argv[]) {
 	//{/* {{{ Textures */
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
+	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
+	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	//}/* }}} */
 	
 	float avgFPS = 0;
@@ -89,12 +91,15 @@ int main(int argc, char *argv[]) {
 	cPlayer oPlayer;
 	oPlayer.create();
 	
+	// Gamestate test
+	cGameState oGame;
+	oGame.create();
 	//Block test
 	cBlockCreator oBlockCreator;
 	oBlockCreator.create();
 	
 	//while not quitting (gameloop)
-	while(!quit) {
+	while(oGame.state != 3) {
 		//fps
 		int frameTicks = capTimer.getTicks();
 	
@@ -103,13 +108,12 @@ int main(int argc, char *argv[]) {
 		
 		//{/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
-		//quit
-		if (state[SDL_SCANCODE_ESCAPE]){
-			quit = true;
-		}
+
+		oGame.run(event);
 		
 		//Logical, magical!
 		oPlayer.run(event);
+		
 		
 		//Check collisions for all blocks test
 		for(int i = 0; i<10;i++)
@@ -142,6 +146,8 @@ int main(int argc, char *argv[]) {
 			
 			renderTexture(sBackground, renderer, 0, 0);
 			
+			// Menu and points and stuff
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector);
 			//Player
 			oPlayer.draw(renderer, sRectangle);
 			oBlockCreator.draw(renderer, sRectangle);//new sprite later
