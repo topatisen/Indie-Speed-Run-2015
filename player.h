@@ -30,17 +30,17 @@ class cPlayer
 		//Check left side
 		enemyX = x2 ;
 		enemyY = y2 ;
-		if(x+32 > enemyX&&x+32 < enemyX+4&&y+30 > enemyY&&y< enemyY+32)
+		if(x+32 > enemyX&&x+32 < enemyX+4&&y+30 > enemyY&&y< enemyY+30)
 		{
 				hspeed = -0.5;
 		}
 		//Check right side
-		if(x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+32)
+		if(x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+30)
 		{
 			hspeed = 0.5;
 		}
 		//Check Up
-		if(x+32 > enemyX&&x < enemyX+32&&y<enemyY+32&&y>enemyY+28)
+		if(x+32 > enemyX&&x < enemyX+30&&y<enemyY+32&&y>enemyY+28)
 		{
 				vspeed = 0.5;
 		}
