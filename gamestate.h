@@ -33,13 +33,62 @@ class cGameState
 	// Handles events
 	int run(const Uint8 *keyboardstate)
 	{
-		if (keyboardstate[SDL_SCANCODE_ESCAPE]){
-			state = 4;
+		if(keyboardstate[SDL_SCANCODE_ESCAPE])
+		{
+			if(state != 1)
+			{
+				state = 1;
+			}
+			else if(state == 1)
+			{
+				state = 2;
+			}
+			SDL_Delay(130);
 		}
-		//KEYPRESSTEST
-		/*while (SDL_PollEvent(&event)) {
-			//Kepresses, works like a charm! <3<3<3<3<3
-			switch(event.type){
+		// If we're in the menu
+		if(state == 1)
+		{
+			if(keyboardstate[SDL_SCANCODE_UP])
+			{
+				menuPosition--;
+				if (menuPosition < 0)
+				{
+					menuPosition = 4;
+				}
+				else if (menuPosition > 4)
+				{
+					menuPosition = 0;
+				}
+				SDL_Delay(130);
+			}
+			if(keyboardstate[SDL_SCANCODE_DOWN])
+			{
+				menuPosition++;
+				if (menuPosition < 0)
+				{
+					menuPosition = 4;
+				}
+				else if (menuPosition > 4)
+				{
+					menuPosition = 0;
+				}
+				SDL_Delay(130);
+			}
+			if(keyboardstate[SDL_SCANCODE_RETURN])
+			{
+  				if(menuPosition == 4)
+				{
+					state = 4;
+				}
+			}
+		}
+	}
+  	/*
+  	int run(SDL_Event event){
+  		//KEYPRESSTEST
+  		while (SDL_PollEvent(&event)) {
+  			//Kepresses, works like a charm! <3<3<3<3<3
+} 			switch(event.type){
 				case SDL_KEYUP:
 					if(event.key.keysym.sym==SDLK_ESCAPE)
 					{
@@ -90,8 +139,9 @@ class cGameState
 					}
 				}
 			}
-		}*/
+		}
 	}
+	*/
 
 	// Draws to renderer
 	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector)
