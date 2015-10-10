@@ -101,6 +101,12 @@ class cPlayer
 		rectOrig.w = 32;
 		rectOrig.h = 32;
 
+		rectNew.x = 0;
+		rectNew.y = 0;
+		rectNew.w = 128;
+		rectNew.h = 16;
+
+
 		ammoR = 0;
 		ammoG = 255;
 		ammoB = 0;
