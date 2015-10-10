@@ -18,6 +18,7 @@ using namespace std;
 #include "timer.h"
 #include "utilities.h"
 #include "player.h" //player-header
+#include "block.h" //block-header, also dungeon generator
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -88,6 +89,9 @@ int main(int argc, char *argv[]) {
 	cPlayer oPlayer;
 	oPlayer.create();
 	
+	//Block test
+	cBlockCreator oBlockCreator;
+	oBlockCreator.create();
 	
 	//while not quitting (gameloop)
 	while(!quit) {
@@ -106,6 +110,12 @@ int main(int argc, char *argv[]) {
 		
 		//Logical, magical!
 		oPlayer.run(event);
+		
+		//Check collisions for all blocks test
+		for(int i = 0; i<10;i++)
+		{
+			oPlayer.checkCollision(oBlockCreator.oBlock[i].x, oBlockCreator.oBlock[i].y);
+		}
 		
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
@@ -134,6 +144,7 @@ int main(int argc, char *argv[]) {
 			
 			//Player
 			oPlayer.draw(renderer, sRectangle);
+			oBlockCreator.draw(renderer, sRectangle);//new sprite later
 			
 			renderTexture(msgInfo, renderer, 10, 10);
 			

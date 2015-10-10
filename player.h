@@ -8,35 +8,92 @@
 class cPlayer
 {
 	public:
-	float x, y, vspeed, hspeed;
+	float x, y, vspeed, hspeed, enemyX, enemyY;
 	
 	bool walkRight, walkLeft, walkUp, walkDown;
+	bool colRight, colLeft, colUp, colDown;//col = collision
 	void create()
 	{
-		walkRight, walkLeft, walkDown, walkUp = false;
-		x = 0;
-		y = 0;
+		walkRight = false;
+		walkLeft = false;
+		walkUp = false;
+		walkDown = false;
+		x = 300;
+		vspeed = 0;
+		hspeed = 0;
+		y = 250;
 		//Create Code
+	}
+	
+	void checkCollision(float x2, float y2)
+	{
+		//Check left side
+		enemyX = x2 ;
+		enemyY = y2 ;
+		if(x+32 > enemyX&&x+32 < enemyX+4&&y+32 > enemyY&&y< enemyY+32)
+		{
+				hspeed = -0.5;
+		}
+		//Check right side
+		if(x < enemyX+32&&x > enemyX+28&&y+32 > enemyY&&y< enemyY+32)
+		{
+			hspeed = 0.5;
+		}
+		//Check Up
+		if(x+32 > enemyX&&x < enemyX+32&&y<enemyY+32&&y>enemyY+28)
+		{
+				vspeed = 0.5;
+		}
+		//Check Down
+		if(y+32 > y2)
+		{
+			if(x+32 > enemyX&&x < enemyX+32&&y+32 > enemyY&&y+32<enemyY+4)
+			{
+				vspeed = -0.5;
+			}
+		}
 	}
 	void run(SDL_Event event)
 	{
 		//Logic code
-		
+		x += hspeed;
+		y += vspeed;
 		if(walkRight == true)
 		{
-			x ++;
+				hspeed = 1;
 		}
 		if(walkLeft == true)
 		{
-			x --;
+				hspeed = -1;
 		}
 		if(walkUp == true)
 		{
-			y --;
+			vspeed = -1;
 		}
 		if(walkDown == true)
 		{
-			y ++;
+				vspeed = 1;
+		}
+		//Collision
+		if(colUp == true)
+		{
+			y -= 2;
+			colUp = false;
+		}
+		if(colDown == true)
+		{
+			y += 2;
+			colDown = false;
+		}
+		if(colRight == true)
+		{
+			x -= 2;
+			colRight = false;
+		}
+		if(colLeft == true)
+		{
+			x += 2;
+			colLeft = false;
 		}
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
@@ -67,20 +124,24 @@ class cPlayer
 					if(event.key.keysym.sym==SDLK_w)
 					{
 						walkUp = false;
+						vspeed = 0;
 						break;
 					}
 					if(event.key.keysym.sym==SDLK_a)
 					{
+						hspeed = 0;
 						walkLeft = false;
 						break;
 					}
 					if(event.key.keysym.sym==SDLK_s)
 					{
+						vspeed = 0;
 						walkDown = false;
 						break;
 					}
 					if(event.key.keysym.sym==SDLK_d)
 					{
+						hspeed = 0;
 						walkRight = false;
 						break;
 					}
