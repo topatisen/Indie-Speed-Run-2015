@@ -163,7 +163,7 @@ mt.max();
 		viewy = 300+(-oPlayer.y);
 		oMapMaker.makeMap(oPlayer.x, oPlayer.y);
 		//Check collisions for all blocks test
-		for(int p = 0; p<10;p++)
+		for(int p = 0; p<20;p++)
 		{
 			for(int i = 0; i<176;i++)
 			{

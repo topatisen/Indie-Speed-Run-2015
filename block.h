@@ -166,7 +166,7 @@ class cRoomCreator
 		roomFinished = false;
 		blockAmount = 176;
 		blockNum = 0;
-		roomWidth = pRand()%12+1;
+		roomWidth = rand()%12+1;
 		roomHeight = roomWidth = rand()%12+1;
 		randDoor = (rand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
@@ -301,7 +301,7 @@ class cMapMaker
 		oMainRoom.randDoor = 500;
 		for(int i = 0;i<20;i++)
 		{
-			oRoomCreator[i].create(-800+pRand()%1599+1,-600+pRand()%1199+1);
+			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
 		}
 	}
 	
