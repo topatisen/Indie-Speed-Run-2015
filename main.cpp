@@ -122,6 +122,8 @@ int main(int argc, char *argv[]) {
 		oPlayer.run(event);
 		oGame.run(keyboardstate);
 		
+		viewx = -oPlayer.x/2;
+		viewy = -oPlayer.y/2;
 		oMapMaker.makeMap();
 		//Check collisions for all blocks test
 		for(int p = 0; p<48;p++)

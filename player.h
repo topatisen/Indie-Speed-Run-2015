@@ -136,7 +136,7 @@ class cPlayer
 	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer)
 	{
 		//Draw Code
-		renderTexture(sPlayer, ren, x, y);
+		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
                            0,
                            255,

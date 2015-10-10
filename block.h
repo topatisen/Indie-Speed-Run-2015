@@ -55,7 +55,7 @@ class cRoomCreator
 		blocky = y1;
 		for(int i = 0;i<blockAmount;i++)
 		{
-			oBlock[i].create(blockx, blocky);
+			oBlock[i].create(blockx+viewx, blocky+viewy);
 		}
 	}
 	void generateRoom()
