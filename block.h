@@ -164,8 +164,10 @@ class cMapMaker
 {
 	public:
 		cRoomCreator oRoomCreator[10];
+		//cRoomCreator oMainRoom;
 	void create()
 	{
+		//oMainRoom.create(-800,-600);
 		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
