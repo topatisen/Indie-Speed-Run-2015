@@ -31,10 +31,13 @@ class cGameState
 	}
 
 	// Handles events
-	int run(SDL_Event event)
+	int run(const Uint8 *keyboardstate)
 	{
+		if (keyboardstate[SDL_SCANCODE_ESCAPE]){
+			state = 4;
+		}
 		//KEYPRESSTEST
-		while (SDL_PollEvent(&event)) {
+		/*while (SDL_PollEvent(&event)) {
 			//Kepresses, works like a charm! <3<3<3<3<3
 			switch(event.type){
 				case SDL_KEYUP:
@@ -87,7 +90,7 @@ class cGameState
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	// Draws to renderer

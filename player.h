@@ -18,7 +18,7 @@ class cPlayer
 		walkLeft = false;
 		walkUp = false;
 		walkDown = false;
-		x = 260;
+		x = 270;
 		y = 250;
 		vspeed = 0;
 		hspeed = 0;
@@ -30,10 +30,11 @@ class cPlayer
 		//Check left side
 		enemyX = x2 ;
 		enemyY = y2 ;
-		if(x<enemyX+2&&y<enemyY)
+		if(x<enemyX+2&&x<enemyX+32&&y <enemyY+32&&y>enemyY)
 		{
-				vspeed = -0.5;
-		}/*
+				//vspeed = -0.5;
+		}
+		/*
 		//Check right side
 		if((x < enemyX+32&&x > enemyX+28&&y+30 > enemyY&&y< enemyY+30))
 		{

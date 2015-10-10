@@ -17,9 +17,9 @@ using namespace std;
 
 #include "timer.h"
 #include "utilities.h"
+#include "gamestate.h"
 #include "player.h" //player-header
 #include "block.h" //block-header, also dungeon generator
-#include "gamestate.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -109,12 +109,13 @@ int main(int argc, char *argv[]) {
 		SDL_PumpEvents();
 		
 		/* {{{ Keyboard presses, mouse events osv.*/
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
+		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
-		oGame.run(event);
+
 		
 		//Logical, magical!
 		oPlayer.run(event);
+		oGame.run(keyboardstate);
 		
 		
 		//Check collisions for all blocks test
