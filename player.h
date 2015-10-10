@@ -68,9 +68,9 @@ class cBullet
 	{
 		renderTexture(sBullet, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sBullet,
-                           col1,
-                           col2,
-                           col3);
+                           color1,
+                           color2,
+                           color3);
 	}
 };
 class cPlayer
