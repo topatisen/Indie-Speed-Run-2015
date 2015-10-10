@@ -23,7 +23,7 @@ class cBlock
 	
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
-		renderTexture(sBlock, ren, x, y);
+		renderTexture(sBlock, ren, x+viewx, y+viewy);
 	}
 };
 

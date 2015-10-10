@@ -15,6 +15,8 @@ topatisen
 
 using namespace std;
 
+float viewx = 0;
+float viewy = 0;
 #include "timer.h"
 #include "utilities.h"
 #include "gamestate.h"
@@ -23,6 +25,8 @@ using namespace std;
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
+
 
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
@@ -111,7 +115,8 @@ int main(int argc, char *argv[]) {
 		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
-
+		//viewx = oPlayer.x;
+		//viewy = oPlayer.y;
 		
 		//Logical, magical!
 		oPlayer.run(event);
