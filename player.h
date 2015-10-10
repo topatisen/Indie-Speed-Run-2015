@@ -19,10 +19,10 @@ class cBullet
 	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
 	{
 		renderTexture(sBullet, ren, x+viewx, y+viewy);
-		SDL_SetTextureColorMod(sPlayer,
-                           ammoR,
-                           ammoG,
-                           ammoB);
+		SDL_SetTextureColorMod(sBullet,
+                           128,
+                           128,
+                           128);
 	}
 };
 class cPlayer
