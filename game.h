@@ -15,11 +15,12 @@ class cGame
 	 * 3 = exit
 	*/
 	int gameState;
-	int playerPoints[2];
+	int playerOnePoints;
+	int playerTwoPoints;
 	
 	void create()
 	{
-		gameState = 0;
+		playerOnePoints, playerTwoPoints, gameState = 0;
 	}
 	void run(SDL_Event event)
 	{
