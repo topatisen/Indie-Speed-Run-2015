@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 	
 	//quit-flag
 	bool quit;
-	srand(4);
+	srand(3);
 	//{/* {{{ FPS-limit tjofrees */
 	//The frames per second timer
 	LTimer fpsTimer;
@@ -128,12 +128,15 @@ int main(int argc, char *argv[]) {
 		//Check collisions for all blocks test
 		for(int p = 0; p<10;p++)
 		{
-			for(int i = 0; i<48;i++)
+			for(int i = 0; i<176;i++)
 			{
 				oPlayer.checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x, oMapMaker.oRoomCreator[p].oBlock[i].y);
 			}
 		}
-		
+		for(int i = 0; i<176;i++)//mainroom collision check
+		{
+			oPlayer.checkCollision(oMapMaker.oMainRoom.oBlock[i].x, oMapMaker.oMainRoom.oBlock[i].y);
+		}
 		
 		
 		//fps

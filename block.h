@@ -35,7 +35,7 @@ class cBlock
 class cRoomCreator
 {
 	public:
-	cBlock oBlock[48];
+	cBlock oBlock[176];
 	int blockAmount, blockNum;
 	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
 	bool topWall, rightWall, downWall, leftWall, roomFinished;
@@ -46,7 +46,7 @@ class cRoomCreator
 		downWall = false;
 		leftWall = false;
 		roomFinished = false;
-		blockAmount = 48;
+		blockAmount = 176;
 		blockNum = 0;
 		roomWidth = rand()%12+1;
 		roomHeight = roomWidth = rand()%12+1;
@@ -164,10 +164,13 @@ class cMapMaker
 {
 	public:
 		cRoomCreator oRoomCreator[10];
-		//cRoomCreator oMainRoom;
+		cRoomCreator oMainRoom;
 	void create()
 	{
-		//oMainRoom.create(-800,-600);
+		oMainRoom.create(-800,-600);
+		oMainRoom.roomWidth = 50;
+		oMainRoom.roomHeight = 38;
+		oMainRoom.randDoor = 500;
 		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
@@ -176,6 +179,7 @@ class cMapMaker
 	
 	void makeMap()
 	{
+		oMainRoom.generateRoom();
 		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].generateRoom();
@@ -183,6 +187,7 @@ class cMapMaker
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
+		oMainRoom.draw(ren, sBlock);
 		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].draw(ren, sBlock);
