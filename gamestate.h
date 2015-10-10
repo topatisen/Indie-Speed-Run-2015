@@ -83,8 +83,7 @@ class cGameState
 				{
 					if(menuPosition == 4)
 					{
-						SDL_Quit();
-						return 0;
+						state = 4;
 					}
 				}
 			}
@@ -113,14 +112,6 @@ class cGameState
 		if(state == 2)
 		{
 			// Draw points and overlay here
-		}
-
-		if (state == 3)
-		{
-			// Destroy stuff, exit
-			SDL_DestroyRenderer(ren);
-			SDL_Quit();
-			return 0;
 		}
 
 	}
