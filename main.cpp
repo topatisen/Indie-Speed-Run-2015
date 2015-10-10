@@ -79,12 +79,12 @@ int main(int argc, char *argv[]) {
 	SDL_Event e;
 	//}/* }}} */
 	
-	//{/* {{{ Textures */
+	/* {{{ Textures */
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
-	//}/* }}} */
+	/* }}} */
 	
 	float avgFPS = 0;
 	SDL_Event event;
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 		// Empty event queueueueueu
 		SDL_PumpEvents();
 		
-		//{/* {{{ Keyboard presses, mouse events osv.*/
+		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
 
 		oGame.run(event);
@@ -136,14 +136,14 @@ int main(int argc, char *argv[]) {
 
 		//If frame finished early
 		
-		//{/* {{{ DRAW */
+		/* {{{ DRAW */
 		if( frameTicks < SCREEN_TICK_PER_FRAME )
 		{
 			//Wait remaining time
 			//SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 			
 			
-			//{/* {{{ DRAW HERE */
+			/* {{{ DRAW HERE */
 			// Draw background
 			
 			
@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 			//render texture
 			SDL_RenderPresent(renderer);
 		}
-		//}/* }}} */
+		/* }}} */
 	}
 	
 	//destroy everything
