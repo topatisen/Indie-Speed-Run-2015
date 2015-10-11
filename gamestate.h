@@ -16,17 +16,15 @@ class cGameState
 	 * 4 = exit
 	*/
 	int state;
-	int playerOnePoints;
-	int playerTwoPoints;
 	int menuPosition;
+	int overLayPosition;
 	
 	void create()
 	{
 		// Initialize variables
-		playerOnePoints = 0;
-		playerTwoPoints = 0;
-		menuPosition = 0;
-		// First state is intro
+		menuPosition = 1;
+		overLayPosition = 240;
+		// First state is playing
 		state = 2;
 	}
 
@@ -35,7 +33,7 @@ class cGameState
 	{
 		if(keyboardstate[SDL_SCANCODE_ESCAPE])
 		{
-			if(state != 1)
+			if(state != 1&&state != 0)
 			{
 				state = 1;
 			}
@@ -54,41 +52,55 @@ class cGameState
 		{
 			if(keyboardstate[SDL_SCANCODE_UP])
 			{
+				overLayPosition -= 100;
+				if(overLayPosition > 440)
+					overLayPosition = 240;
+				if(overLayPosition < 240)
+					overLayPosition = 440;
 				menuPosition--;
 				if (menuPosition < 1)
 				{
-					menuPosition = 4;
+					menuPosition = 3;
+					overLayPosition = 440;
 				}
-				else if (menuPosition > 4)
+				else if (menuPosition > 3)
 				{
 					menuPosition = 1;
+					overLayPosition = 240;
 				}
 				SDL_Delay(130);
 			}
 			if(keyboardstate[SDL_SCANCODE_DOWN])
 			{
 				menuPosition++;
-				if (menuPosition < 1)
+				overLayPosition += 100;
+				if(overLayPosition > 440)
+					overLayPosition = 240;
+				if(overLayPosition < 240)
+					overLayPosition = 440;
+				if (menuPosition > 3)
 				{
-					menuPosition = 4;
-				}
-				else if (menuPosition > 4)
-				{
+					overLayPosition = 240;
 					menuPosition = 1;
+				}
+				else if (menuPosition < 1)
+				{
+					menuPosition = 3;
+					overLayPosition = 440;
 				}
 				SDL_Delay(130);
 			}
 			if(keyboardstate[SDL_SCANCODE_RETURN])
 			{
-				if(menuPosition == 2)
+				if(menuPosition == 1)
 				{
 					state = 2;
 				}
-				else if(menuPosition == 3)
+				else if(menuPosition == 2)
 				{
 					state = 3;
 				}
-				else if(menuPosition == 4)
+				else if(menuPosition == 3)
 				{
 					state = 4;
 				}
@@ -111,7 +123,7 @@ class cGameState
 		if(state == 1)
 		{
 			renderTexture(sMenuOverlay, ren, 0, 0);
-			renderTexture(sMenuSelector, ren, 0, menuPosition*100);
+			renderTexture(sMenuSelector, ren, 200, overLayPosition);
 			//Draw menu here
 		}
 

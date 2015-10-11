@@ -297,7 +297,6 @@ mt.max();
 			renderTexture(sBackground, renderer, 0, 0);
 			
 			// Menu and points and stuff
-			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
 
 			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
 			//Player
@@ -307,6 +306,7 @@ mt.max();
 			
 			//oSpawner.draw(renderer, sEnemy);
 			
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
 			renderTexture(msgInfo, renderer, 10, 10);
 			
 			//}/* }}} */
