@@ -16,9 +16,9 @@ class cBlock
 		life = 12;
 		alive = true;
 		looseLife = true;
-		color1 = col1+(-20)+pRand()%19+1;
-		color2 = col2+(-20)+pRand()%19+1;
-		color3 = col2+(-20)+pRand()%19+1;
+		color1 = col1+pRand()%19+1;
+		color2 = col2+pRand()%19+1;
+		color3 = col3+pRand()%19+1;
 		x = x1;
 		y = y1;
 		x = x - (x%32);
@@ -42,13 +42,22 @@ class cBlock
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
+		if(x > 768)
+		alive = false;
+		if(x < -768)
+		alive = false;
+		if(y > 600)
+		alive = false;
+		if(y < -600)
+		alive = false;
 		if(alive == true)
 		{
-			renderTexture(sBlock, ren, x+viewx, y+viewy);
-			SDL_SetTextureColorMod(sBlock,
+		SDL_SetTextureColorMod(sBlock,
                            color1,
                            color2,
                            color3);
+			renderTexture(sBlock, ren, x+viewx, y+viewy);
+			
 		}
 	}
 };
@@ -58,17 +67,26 @@ class cBlock
 class cEnemy
 {
 	public:
-		float x, y, vspeed, hspeed, col1, col2, col3,
-				dx, dy;
+		float x, y, vspeed, hspeed, color1, color2, color3,dx, dy;
+		int stColR,stColG,stColB;
+				
 				
 		bool alive;
 		bool hit;
-		bool addColor;
-	void create(float startx, float starty)
+		bool addColor, addToAmount;
+	void create(float startx, float starty, float col1, float col2, float col3)
 	{
-		col1 = rand()%254+1;
-		col2 = rand()%254+1;
-		col3 = rand()%254+1;
+		addToAmount = false;
+		enemyAmount ++;
+		color1 = 255;
+		color2 = 255;
+		color3 = 255;
+		color1 = col1;
+		color2 = col2;
+		color3 = col3;
+		stColR = color1;
+		stColG = color2;
+		stColB = color3;
 		x = startx;
 		y = starty;
 		hspeed = 0;
@@ -79,9 +97,35 @@ class cEnemy
 	}
 	void run(float targetx, float targety)
 	{
-		if((col1 < 1)&&(col1 < 2)&&(col1 < 3))
+		if(stColR > 254)
+			stColR = 254;
+		if(stColG > 254)
+			stColG = 254;
+		if(stColB > 254)
+			stColB = 254;
+		if(x > 832)
+		alive = false;
+		if(x < -832)
+		alive = false;
+		if(y > 632)
+		alive = false;
+		if(y < -632)
+		alive = false;
+		if(alive == false)
+		{
+			if(addToAmount == false)
+			{
+				enemyCheck ++;
+				addToAmount = true;
+			}
+		}
+		if((color1 < 2)&&(color2 < 2)&&(color3 < 2))
 		{
 			alive = false;
+		}
+		if(alive == false)
+		{
+			x = -6000;
 		}
 		if(alive == true){
 		if(x < -800)
@@ -105,21 +149,28 @@ class cEnemy
 			playerHealth -= 20;
 			if(addColor == false)
 			{
+			
 			if(globR < 255)
 			{
-				globR += col1*0.1;
+				globR += stColR*0.1;
 			}
 			if(globG < 255)
 			{
-				globG += col2*0.1;
+				globG += stColG*0.1;
 			}
 			if(globB < 255)
 			{
-				globB += col3*0.1;
+				globB += stColB*0.1;
 			}
+				
 				addColor = true;
+				
 			}
-			alive = false;
+			else
+			{
+				alive = false;
+			}
+			
 		}
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(600))
 		{
@@ -153,7 +204,7 @@ class cEnemy
 	//collision with other enemies
 	void checkCollision(float otherx, float othery,float otherradius)
 	{
-		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
+		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(8+otherradius)) 
 		{
 			
 			if(x >= otherx)
@@ -174,35 +225,36 @@ class cEnemy
 			hit = true;
 			if(globR > 1)
 			{
-				col1 -= 1;
+				color1 -= 20;
 			}
 			if(globG > 1)
 			{
-				col2 -= 1;
+				color2 -= 20;
 			}
 			if(globB > 1)
 			{
-				col3 -= 1;
+				color3 -= 20;
 			}
-			if(x >= otherx)
+			/*if(x >= otherx)
 			hspeed += ((otherx-x)*(otherx-x)/80);
 			if(x <= otherx)
 			hspeed -= ((otherx-x)*(otherx-x)/80);
 			if(y >= othery)
 			vspeed += ((othery-y)*(othery-y)/80);
 			if(y <= othery)
-			vspeed -= ((othery-y)*(othery-y)/80);
+			vspeed -= ((othery-y)*(othery-y)/80);*/
 		}
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sEnemy)
 	{
 		if(alive == true)
 		{
-			renderTexture(sEnemy, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sEnemy,
-                           col1,
-                           col2,
-                           col3);
+                           stColR,
+                           stColG,
+                           stColB);
+			renderTexture(sEnemy, ren, x+viewx, y+viewy);
+		
 		}
 	}
 };
@@ -212,12 +264,12 @@ class cSpawner
 	public:
 	cEnemy oEnemy[8];
 	int enemyAmount;
-	void create(float startx, float starty)
+	void create(float startx, float starty, float col1, float col2, float col3)
 	{
 		enemyAmount = 8;
 		for(int i = 0;i<enemyAmount;i++)
 		{
-			oEnemy[i].create(startx+(rand()%16),starty+(rand()%16));
+			oEnemy[i].create(startx+(rand()%16),starty+(rand()%16), col1, col2, col3);
 		}
 	}
 	void run(float targetx, float targety)
@@ -250,7 +302,7 @@ class cRoomCreator
 	cSpawner oSpawner;
 	int blockAmount, blockNum;
 	int blockx, blocky, roomWidth, roomHeight, randDoor, exists;
-	int col1, col2, col3;
+	int col1, col2, col3, colorType;
 	bool topWall, rightWall, downWall, leftWall, roomFinished;
 	void create(float x1, float y1)
 	{
@@ -261,19 +313,54 @@ class cRoomCreator
 		roomFinished = false;
 		blockAmount = 48;
 		blockNum = 0;
-		roomWidth = rand()%12+1;
-		roomHeight = roomWidth = rand()%12+1;
+		roomWidth = rand()%12+3;
+		roomHeight = roomWidth = rand()%12+3;
 		randDoor = (rand()%(roomWidth+roomHeight)+1); 
 		blockx = x1;
 		blocky = y1;
-		col1 = rand()%234+20;
-		col2 = rand()%234+20;
-		col3 = rand()%234+20;
+		colorType = rand()%3+1;
+		if(colorType <= 1)
+		{
+			col1 = 204;
+			col2 = 0;
+			col3 = 0;
+		}
+		if(colorType == 2)
+		{
+			col1 = 0;
+			col2 = 204;
+			col3 = 0;
+		}
+		if(colorType >= 3)
+		{
+			col1 = 0;
+			col2 = 0;
+			col3 = 204;
+		}
+
 		for(int i = 0;i<blockAmount;i++)
 		{
+		if(colorType <= 1)
+		{
+			col1 = 204;
+			col2 = 0;
+			col3 = 0;
+		}
+		if(colorType == 2)
+		{
+			col1 = 0;
+			col2 = 204;
+			col3 = 0;
+		}
+		if(colorType >= 3)
+		{
+			col1 = 0;
+			col2 = 0;
+			col3 = 204;
+		}
 			oBlock[i].create(blockx+viewx, blocky+viewy,col1,col2,col3);
 		}
-		oSpawner.create(x1+((roomWidth/2)*32),y1+((roomHeight/2)*32));
+		oSpawner.create(x1+((roomWidth/2)*32),y1+((roomHeight/2)*32),col1, col2, col3);
 	}
 	void generateRoom(float targetx, float targety)
 	{
@@ -296,7 +383,7 @@ class cRoomCreator
 				}
 				else
 				{
-					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
 				}
 				
 				blockx +=32;
@@ -318,7 +405,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
 				}
 				blocky += 32;
 				blockNum ++;
@@ -339,7 +426,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
 				}
 				blockx -= 32;
 				blockNum ++;
@@ -360,7 +447,7 @@ class cRoomCreator
 			}
 			else
 				{
-					randDoor = (pRand()%(roomWidth+roomHeight)+1); 
+					randDoor = (rand()%(roomWidth+roomHeight)+1); 
 				}
 				blocky -= 32;
 				blockNum ++;
@@ -392,24 +479,25 @@ class cRoomCreator
 class cMapMaker
 {
 	public:
-		cRoomCreator oRoomCreator[20];
-		cRoomCreator oMainRoom;
+		cRoomCreator oRoomCreator[10];
+		//cRoomCreator oMainRoom;
 	void create()
 	{
+		playerHealth = 100;
 		/*oMainRoom.create(-800,-600);
 		oMainRoom.roomWidth = 50;
 		oMainRoom.roomHeight = 38;
 		oMainRoom.randDoor = 500;*/
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
-			oRoomCreator[i].create(-800+rand()%1599+1,-600+rand()%1199+1);
+			oRoomCreator[i].create(-800+(rand()%1599+1),-600+(rand()%1199+1));
 		}
 	}
 	
 	void makeMap(float targetx, float targety)
 	{
 		//oMainRoom.generateRoom(targetx, targety);
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].generateRoom(targetx, targety);
 		}
@@ -417,7 +505,7 @@ class cMapMaker
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock, SDL_Texture *sEnemy)
 	{
 		//oMainRoom.draw(ren, sBlock,sEnemy);
-		for(int i = 0;i<20;i++)
+		for(int i = 0;i<10;i++)
 		{
 			oRoomCreator[i].draw(ren, sBlock, sEnemy);
 		}

@@ -31,13 +31,13 @@ class cBullet
 			x = -6000;
 			y = -6000;
 		}
-		if(x < -800)
+		if(x < -832)
 		alive = false;
-		if(x > 800)
+		if(x > 832)
 		alive = false;
-		if(y < -616)
+		if(y < -632)
 		alive = false;
-		if(y > 600)
+		if(y > 632)
 		alive = false;
 	}
 	void checkCollision(float otherx, float othery, float radius)
@@ -192,8 +192,8 @@ class cPlayer
 		walkLeft = false;
 		walkUp = false;
 		walkDown = false;
-		x = 0;
-		y = 0;
+		x = 736;
+		y = 536;
 		vspeed = 0;
 		hspeed = 0;
 		//Create Code
@@ -263,13 +263,13 @@ class cPlayer
 			playerHealth += 0.25;
 		}
 		////
-		if(x < -800)
+		if(x < -768)
 		hspeed = 2;
-		if(x > 800)
+		if(x > 768)
 		hspeed = -2;
-		if(y < -616)
+		if(y < -608)
 		vspeed = 2;
-		if(y > 600)
+		if(y > 608)
 		vspeed = -2;
 		//FRICTION FIXING
 		if(hspeed > 0)
