@@ -133,6 +133,7 @@ mt.max();
 	SDL_Texture *sControlscreen = loadTexture("sControlscreen.png", renderer);
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
+	SDL_Texture *sEnding = loadTexture("sEnding.png", renderer);
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -154,9 +155,13 @@ mt.max();
 	
 	bool elevator = false;
 	bool dead = false;
+	bool ending = false;
 	
 	int elevTimer = 10;
 	int dieTimer = 10;
+	int endTimer = 0;
+	
+	int level = 0;
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -169,7 +174,7 @@ mt.max();
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
 		//cleared level
-		if(enemyCheck > 140)
+		if(enemyCheck > 10)
 		{
 			levelCleared = true;
 		}
@@ -206,6 +211,7 @@ mt.max();
 				oPlayer.x = 736;
 				oPlayer.y = 536;
 				elevator = true;
+				level ++;
 				levelCleared = false;
 			}
 		
@@ -229,7 +235,10 @@ mt.max();
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
 		oPlayer.run(event);
-		
+		if(level == 1)
+		{
+			ending = true;
+		}
 		//run spawner
 		if(elevator == true)
 			{
@@ -242,6 +251,20 @@ mt.max();
 					SDL_Delay(3000);
 					elevator = false;
 					elevTimer = 10;
+				}
+				
+			}
+		if(ending == true)
+			{
+				if(endTimer > 0)
+				{
+					endTimer --;
+				}
+				else
+				{
+					SDL_Delay(6000);
+					ending = false;
+					endTimer = 10;
 				}
 				
 			}
@@ -362,6 +385,10 @@ mt.max();
 			if(dead == true)
 			{
 				renderTexture(sDieScreen, renderer, 0, 0);
+			}
+			if(ending == true)
+			{
+				renderTexture(sEnding, renderer, 0, 0);
 			}
 			//}/* }}} */
 			//render texture
