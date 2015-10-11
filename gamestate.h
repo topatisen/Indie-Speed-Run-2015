@@ -25,106 +25,112 @@ class cGameState
 		menuPosition = 1;
 		overLayPosition = 190;
 		// First state is playing
-		state = 2;
+		state = 0;
 	}
 
 	// Handles events
-	int run(const Uint8 *keyboardstate)
+	int run(const Uint8 *keyboardstate, int fpsPassed)
 	{
-		if(keyboardstate[SDL_SCANCODE_ESCAPE])
+		if( fpsPassed > 200 && state == 0)
 		{
-			if(state != 1&&state != 0)
-			{
-				state = 1;
-			}
-			else if(state == 1)
-			{
-				state = 2;
-			}
-			else if(state == 3)
-			{
-				state == 1;
-			}
-			SDL_Delay(130);
+			state = 1;
 		}
-		// If we're in the menu
-		if(state == 1)
+		if(state != 0) 
 		{
-			if(keyboardstate[SDL_SCANCODE_UP])
+			if(keyboardstate[SDL_SCANCODE_ESCAPE])
 			{
-				overLayPosition -= 80;
-				if(overLayPosition > 350)
-					overLayPosition = 190;
-				if(overLayPosition < 190)
-					overLayPosition = 350;
-				menuPosition--;
-				if (menuPosition < 1)
+				if(state != 1&&state != 0)
 				{
-					menuPosition = 3;
-					overLayPosition = 350;
+					state = 1;
 				}
-				else if (menuPosition > 3)
-				{
-					menuPosition = 1;
-					overLayPosition = 190;
-				}
-				SDL_Delay(130);
-			}
-			if(keyboardstate[SDL_SCANCODE_DOWN])
-			{
-				menuPosition++;
-				overLayPosition += 80;
-				if(overLayPosition > 350)
-					overLayPosition = 190;
-				if(overLayPosition < 190)
-					overLayPosition = 350;
-				if (menuPosition > 3)
-				{
-					overLayPosition = 190;
-					menuPosition = 1;
-				}
-				else if (menuPosition < 1)
-				{
-					menuPosition = 3;
-					overLayPosition = 350;
-				}
-				SDL_Delay(130);
-			}
-			if(keyboardstate[SDL_SCANCODE_RETURN])
-			{
-				if(menuPosition == 1)
+				else if(state == 1)
 				{
 					state = 2;
 				}
-				else if(menuPosition == 2)
+				else if(state == 3)
 				{
-					state = 3;
+					state == 1;
 				}
-				else if(menuPosition == 3)
+				SDL_Delay(130);
+			}
+			// If we're in the menu
+			if(state == 1)
+			{
+				if(keyboardstate[SDL_SCANCODE_UP])
 				{
-					state = 4;
+					overLayPosition -= 80;
+					if(overLayPosition > 350)
+						overLayPosition = 190;
+					if(overLayPosition < 190)
+						overLayPosition = 350;
+					menuPosition--;
+					if (menuPosition < 1)
+					{
+						menuPosition = 3;
+						overLayPosition = 350;
+					}
+					else if (menuPosition > 3)
+					{
+						menuPosition = 1;
+						overLayPosition = 190;
+					}
+					SDL_Delay(130);
+				}
+				if(keyboardstate[SDL_SCANCODE_DOWN])
+				{
+					menuPosition++;
+					overLayPosition += 80;
+					if(overLayPosition > 350)
+						overLayPosition = 190;
+					if(overLayPosition < 190)
+						overLayPosition = 350;
+					if (menuPosition > 3)
+					{
+						overLayPosition = 190;
+						menuPosition = 1;
+					}
+					else if (menuPosition < 1)
+					{
+						menuPosition = 3;
+						overLayPosition = 350;
+					}
+					SDL_Delay(130);
+				}
+				if(keyboardstate[SDL_SCANCODE_RETURN])
+				{
+					if(menuPosition == 1)
+					{
+						state = 2;
+					}
+					else if(menuPosition == 2)
+					{
+						state = 3;
+					}
+					else if(menuPosition == 3)
+					{
+						state = 4;
+					}
 				}
 			}
 		}
 	}
 	// Draws to renderer
-	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector, SDL_Texture *sAboutOverlay)
+	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector, SDL_Texture *sAboutOverlay, SDL_Texture *sIntroscreen, SDL_Texture *sControlscreen)
 	{
 		//Draw Code
 		// Draw the intro thingie
 		if (state == 0)
 		{
 			// Draw intro here
-			// Currently, skip directly to menu
-			state = 1;
+			renderTexture(sIntroscreen, ren, 0, 0);
 		}
 		
 		// Draw menu if we're in the pause/menu state
 		if(state == 1)
 		{
+			//Draw menu here
 			renderTexture(sMenuOverlay, ren, 0, 0);
 			renderTexture(sMenuSelector, ren, 140, overLayPosition);
-			//Draw menu here
 		}
 
 		if(state == 2)
