@@ -419,7 +419,7 @@ class cPlayer
 		sprintf(gHex,"0x%02X",ammoG);
 		sprintf(bHex,"0x%02X",ammoB);
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font)
+	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font, SDL_Texture *BarLay)
 	{
 		rHexMessage = createTextMessage(font, {255,255,255}, rHex, ren);
 		gHexMessage = createTextMessage(font, {255,255,255}, gHex, ren);
@@ -430,6 +430,7 @@ class cPlayer
 			oBullet[i].draw(ren,sBullet);
 		}
 		//healthbar
+		renderTexture(BarLay, ren, 0, 0);
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
 		// Ammobars
 		SDL_RenderCopyEx(ren, sRBar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);

@@ -368,18 +368,17 @@ bool levelCleared = false;
 			oMapMaker.draw(renderer, sBlock, sEnemy);//new sprite later
 			//Player
 
+			oPlayer.draw(renderer, sPlayer,sHealthbar, sBullet, sRBar, sGBar, sBBar, fFont, sBarLay);
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			renderTexture(sGoal, renderer, -736+viewx, -568+viewy);
-			oPlayer.draw(renderer, sPlayer,sHealthbar, sBullet, sRBar, sGBar, sBBar, fFont);
 			
 			//oSpawner.draw(renderer, sEnemy);
 			
-			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			//renderTexture(msgInfo, renderer, 10, 10);
 			if(oGame.state == 2)
 			{
 				renderTexture(levelMsg, renderer, 20, 20);
 				renderTexture(enemyMsg, renderer, 20, 40);
-				renderTexture(sBarLay, renderer, 0, 0);
 			}
 			if(oGame.state == 1)
 			{

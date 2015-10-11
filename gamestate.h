@@ -135,6 +135,7 @@ class cGameState
 
 		if(state == 2)
 		{
+			//renderTexture(BarLay, ren, 0, 0);
 			// Draw points and overlay here
 		}
 
