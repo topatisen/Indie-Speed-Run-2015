@@ -18,9 +18,9 @@ class cBullet
 		alive = false;
 		x = -6000;
 		y = -6000;
-		color1 = 0;
-		color2 = 0;
-		color3 = 0;
+		color1 = globR;
+		color2 = globG;
+		color3 = globB;
 	}
 	void run()
 	{
@@ -380,13 +380,13 @@ class cPlayer
 					}
 			}	
 		}
-		sprintf(rHex,"0x%02X",ammoR);
-		sprintf(gHex,"0x%02X",ammoG);
-		sprintf(bHex,"0x%02X",ammoB);
 		
 		ammoR = globR;
 		ammoG = globG;
 		ammoB = globB;
+		sprintf(rHex,"0x%02X",ammoR);
+		sprintf(gHex,"0x%02X",ammoG);
+		sprintf(bHex,"0x%02X",ammoB);
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font)
 	{
