@@ -129,15 +129,10 @@ mt.max();
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
 	SDL_Texture *sElevatorScreen = loadTexture("sElevatorScreen.png", renderer);
-<<<<<<< HEAD
 	SDL_Texture *sDieScreen = loadTexture("sDieScreen.png", renderer);
-	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sControlscreen = loadTexture("sControlscreen.png", renderer);
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
-=======
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
-	SDL_Texture *sControlscreen = loadTexture("sControlscreen.png", renderer);
->>>>>>> 5504c8d294baf2ba2f9d15d3e049857a9a75218b
 	/* }}} */
 	
 	float avgFPS = 0;
