@@ -128,12 +128,11 @@ mt.max();
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
-<<<<<<< HEAD
 	SDL_Texture *sElevatorScreen = loadTexture("sElevatorScreen.png", renderer);
-=======
+	SDL_Texture *sDieScreen = loadTexture("sDieScreen.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sControlscreen = loadTexture("sControlscreen.png", renderer);
->>>>>>> c7d2cddf4bd423fc9bb06fc4e9d76bdcd4ffcaa2
+	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -154,8 +153,10 @@ mt.max();
 	bool restart = false;
 	
 	bool elevator = false;
+	bool dead = false;
 	
 	int elevTimer = 10;
+	int dieTimer = 10;
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -168,7 +169,7 @@ mt.max();
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
 		//cleared level
-		if(enemyCheck > 10)
+		if(enemyCheck > 140)
 		{
 			levelCleared = true;
 		}
@@ -177,10 +178,12 @@ mt.max();
 		
 		if(playerHealth < 0)
 		{
+			dead = true;
 			restart = true;
 		}
 		if(restart == true)
 		{
+				dieTimer = 10;
 				nextLevel = true;
 				enemyCheck = 0;
 				enemyAmount = 0;
@@ -239,6 +242,20 @@ mt.max();
 					SDL_Delay(3000);
 					elevator = false;
 					elevTimer = 10;
+				}
+				
+			}
+		if(dead == true)
+			{
+				if(dieTimer > 0)
+				{
+					dieTimer --;
+				}
+				else
+				{
+					SDL_Delay(3000);
+					dead = false;
+					dieTimer = 10;
 				}
 				
 			}
@@ -334,10 +351,17 @@ mt.max();
 			
 			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			//renderTexture(msgInfo, renderer, 10, 10);
-			
+			if(oGame.state == 1)
+			{
+				renderTexture(sControls, renderer, 400, 300);
+			}
 			if(elevator == true)
 			{
 				renderTexture(sElevatorScreen, renderer, 0, 0);
+			}
+			if(dead == true)
+			{
+				renderTexture(sDieScreen, renderer, 0, 0);
 			}
 			//}/* }}} */
 			//render texture
