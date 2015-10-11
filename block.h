@@ -61,17 +61,19 @@ class cEnemy
 		float x, y, vspeed, hspeed, col1, col2, col3,
 				dx, dy;
 				
-		bool alive = false;
-		bool hit = false;
+		bool alive;
+		bool hit;
+		bool addColor;
 	void create(float startx, float starty)
 	{
-		col1 = 128;
-		col2 = 32;
-		col3 = 0;
+		col1 = rand()%254+1;
+		col2 = rand()%254+1;
+		col3 = rand()%254+1;
 		x = startx;
 		y = starty;
 		hspeed = 0;
 		vspeed = 0;
+		addColor = false;
 		alive = true;
 		hit = false;
 	}
@@ -97,6 +99,13 @@ class cEnemy
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(24))
 		{
 			playerHealth -= 20;
+			if(addColor == false)
+			{
+				globR += col1*0.1;
+				globG += col2*0.1;
+				globB += col3*0.1;
+				addColor = true;
+			}
 			alive = false;
 		}
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(600))
@@ -144,7 +153,7 @@ class cEnemy
 			vspeed -= ((othery-y)*(othery-y)/80);
 		}
 	}
-	//collision with other enemies
+	//collision with other bullets
 	void checkCollisionBullet(float otherx, float othery,float otherradius)
 	{
 		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 

@@ -383,6 +383,10 @@ class cPlayer
 		sprintf(rHex,"0x%02X",ammoR);
 		sprintf(gHex,"0x%02X",ammoG);
 		sprintf(bHex,"0x%02X",ammoB);
+		
+		ammoR = globR;
+		ammoG = globG;
+		ammoB = globB;
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font)
 	{

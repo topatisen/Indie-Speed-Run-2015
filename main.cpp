@@ -20,6 +20,10 @@ using namespace std;
 float viewx = 0;
 float viewy = 0;
 float playerHealth;
+
+int globR;
+int globG;
+int globB;
 #include "utilities.h"
 #include "gamestate.h"
 #include "player.h" //player-header
