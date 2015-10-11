@@ -40,9 +40,9 @@ class cBullet
 		if(y > 600)
 		alive = false;
 	}
-	void checkCollision(float otherx, float othery)
+	void checkCollision(float otherx, float othery, float radius)
 	{
-		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(24))
+		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(8+radius))
 		{
 			alive = false;
 		}

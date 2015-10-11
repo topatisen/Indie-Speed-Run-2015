@@ -190,10 +190,11 @@ mt.max();
 			{
 				for(int g = 0; g<8;g++)
 				{
-					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollisionBullet(oPlayer.oBullet[t].x+8, oPlayer.oBullet[t].y+8,8);
+					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollisionBullet(oPlayer.oBullet[i].x+8, oPlayer.oBullet[i].y+8,12);
+					oPlayer.oBullet[i].checkCollision(oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].x, oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].y,0);
 					if(oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].hit == true)
 					{
-						//oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].alive = false;
+						//oPlayer.oBullet[t].alive = false;
 					}
 				}
 			}
@@ -217,7 +218,7 @@ mt.max();
 		{
 			for(int i = 0; i<48;i++)
 			{
-				oPlayer.oBullet[t].checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x+8, oMapMaker.oRoomCreator[p].oBlock[i].y+8);
+				oPlayer.oBullet[t].checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x+8, oMapMaker.oRoomCreator[p].oBlock[i].y+8,18);
 				oMapMaker.oRoomCreator[p].oBlock[i].checkCollision(oPlayer.oBullet[t].x-8,oPlayer.oBullet[t].y-8);
 			}
 		}

@@ -79,6 +79,10 @@ class cEnemy
 	}
 	void run(float targetx, float targety)
 	{
+		if((col1 < 1)&&(col1 < 2)&&(col1 < 3))
+		{
+			alive = false;
+		}
 		if(alive == true){
 		if(x < -800)
 		hspeed = 3;
@@ -101,15 +105,15 @@ class cEnemy
 			playerHealth -= 20;
 			if(addColor == false)
 			{
-			if(globR > 1)
+			if(globR < 255)
 			{
 				globR += col1*0.1;
 			}
-			if(globG > 1)
+			if(globG < 255)
 			{
 				globG += col2*0.1;
 			}
-			if(globB > 1)
+			if(globB < 255)
 			{
 				globB += col3*0.1;
 			}
@@ -167,15 +171,16 @@ class cEnemy
 	{
 		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
 		{
-			if(globR > 0)
+			hit = true;
+			if(globR > 1)
 			{
 				col1 -= 1;
 			}
-			if(globG > 0)
+			if(globG > 1)
 			{
 				col2 -= 1;
 			}
-			if(globB > 0)
+			if(globB > 1)
 			{
 				col3 -= 1;
 			}
