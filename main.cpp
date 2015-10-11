@@ -6,6 +6,7 @@ topatisen
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -21,6 +22,7 @@ float viewx = 0;
 float viewy = 0;
 float playerHealth;
 
+bool playLevel;
 int globR;
 int globG;
 int globB;
@@ -40,7 +42,9 @@ int enemyAmount;
 const int SCREEN_FPS = 60;
 const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
-
+//music
+Mix_Music *sndIntro = NULL;
+Mix_Music *sndLevel = NULL;
 
 
 int main(int argc, char *argv[]) {
@@ -77,8 +81,31 @@ mt.max();
 		logSDLError(std::cerr, "SDL_Init");
 		return 1;
 	}
+	//SAMPLE TRY
+	Mix_Chunk *sndShoot = NULL;		//Pointer to our sound, in memory
+	int channel;				//Channel on which our sound is played
+	  
+	int audio_rate = 22050;			//Frequency of audio playback
+	Uint16 audio_format = AUDIO_S16SYS; 	//Format of the audio we're playing
+	int audio_channels = 2;			//2 channels = stereo
+	int audio_buffers = 4096;	
+	if(Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) != 0) {
+		printf("Unable to initialize audio: %s\n", Mix_GetError());
+		exit(1);
+	}
+	sndShoot = Mix_LoadWAV("sndShoot.wav");
+	//channel = Mix_PlayChannel(-1, sndShoot, 0);
 	TTF_Init();
 	IMG_Init(1);
+	//audio
+	//Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
+		sndIntro = Mix_LoadMUS( "sndIntro.ogg" );
+		sndLevel = Mix_LoadMUS( "sndBaseLoop.ogg" );
+
 	//{/* {{{ SDL window, renderer'n'shizzle to ma dizzle */
 	SDL_Window *window = SDL_CreateWindow("SDL GAME", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (window == 0){
@@ -162,11 +189,16 @@ mt.max();
 	int endTimer = 0;
 	
 	int level = 0;
+	
+	playLevel = false;
+
+	int musicTimer = 2040;
+	Mix_PlayMusic( sndLevel, -1 );
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
 		int frameTicks = capTimer.getTicks();
-	
+
 		// Empty event queueueueueu
 		SDL_PumpEvents();
 		
@@ -234,11 +266,12 @@ mt.max();
 		if((oGame.state == 2))
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
-		oPlayer.run(event);
+		oPlayer.run(event, sndShoot);
 		if(level == 1)
 		{
 			ending = true;
 		}
+		
 		//run spawner
 		if(elevator == true)
 			{
@@ -335,7 +368,6 @@ mt.max();
 		}
 		}
 		
-		
 		}
 		//fps
 		avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
@@ -401,6 +433,7 @@ mt.max();
 	}
 	
 	//destroy everything
+	Mix_CloseAudio();
 	SDL_DestroyTexture(sRectangle);
 	SDL_DestroyTexture(sBackground);
 	SDL_DestroyTexture(msgInfo);

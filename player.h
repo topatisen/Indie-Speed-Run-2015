@@ -236,7 +236,7 @@ class cPlayer
 			vspeed = -0.5;
 		}
 	}
-	void run(SDL_Event event)
+	void run(SDL_Event event, Mix_Chunk *sndShoot)
 	{
 		//Bullet
 		for(int i = 0;i<8;i++)
@@ -338,6 +338,7 @@ class cPlayer
 			
 			if(shootTimer >6)
 			{
+				Mix_PlayChannel(-1, sndShoot, 0);
 				oBullet[bulletNum].direction = shootingDir;
 				oBullet[bulletNum].shoot(x+8,y+8, globR, globG, globB);
 				
