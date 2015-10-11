@@ -128,6 +128,8 @@ mt.max();
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
+	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
+	SDL_Texture *sControlscreen = loadTexture("sControlscreen.png", renderer);
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -210,7 +212,7 @@ mt.max();
 		globG = 254;
 		if(globB > 254)
 		globB = 254;
-		oGame.run(keyboardstate);
+		oGame.run(keyboardstate, countedFrames);
 		if((oGame.state == 2))
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
@@ -308,8 +310,8 @@ mt.max();
 			
 			//oSpawner.draw(renderer, sEnemy);
 			
-			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
-			renderTexture(msgInfo, renderer, 10, 10);
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
+			//renderTexture(msgInfo, renderer, 10, 10);
 			
 			//}/* }}} */
 			//render texture

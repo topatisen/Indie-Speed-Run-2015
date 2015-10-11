@@ -29,80 +29,85 @@ class cGameState
 	}
 
 	// Handles events
-	int run(const Uint8 *keyboardstate)
+	int run(const Uint8 *keyboardstate, int fpsPassed)
 	{
-		if(keyboardstate[SDL_SCANCODE_ESCAPE])
+		if( fpsPassed > 200)
+			state = 1;
+		if(state != 0) 
 		{
-			if(state != 1&&state != 0)
+			if(keyboardstate[SDL_SCANCODE_ESCAPE])
 			{
-				state = 1;
-			}
-			else if(state == 1)
-			{
-				state = 2;
-			}
-			else if(state == 3)
-			{
-				state == 1;
-			}
-			SDL_Delay(130);
-		}
-		// If we're in the menu
-		if(state == 1)
-		{
-			if(keyboardstate[SDL_SCANCODE_UP])
-			{
-				overLayPosition -= 80;
-				if(overLayPosition > 350)
-					overLayPosition = 190;
-				if(overLayPosition < 190)
-					overLayPosition = 350;
-				menuPosition--;
-				if (menuPosition < 1)
+				if(state != 1&&state != 0)
 				{
-					menuPosition = 3;
-					overLayPosition = 350;
+					state = 1;
 				}
-				else if (menuPosition > 3)
-				{
-					menuPosition = 1;
-					overLayPosition = 190;
-				}
-				SDL_Delay(130);
-			}
-			if(keyboardstate[SDL_SCANCODE_DOWN])
-			{
-				menuPosition++;
-				overLayPosition += 80;
-				if(overLayPosition > 350)
-					overLayPosition = 190;
-				if(overLayPosition < 190)
-					overLayPosition = 350;
-				if (menuPosition > 3)
-				{
-					overLayPosition = 190;
-					menuPosition = 1;
-				}
-				else if (menuPosition < 1)
-				{
-					menuPosition = 3;
-					overLayPosition = 350;
-				}
-				SDL_Delay(130);
-			}
-			if(keyboardstate[SDL_SCANCODE_RETURN])
-			{
-				if(menuPosition == 1)
+				else if(state == 1)
 				{
 					state = 2;
 				}
-				else if(menuPosition == 2)
+				else if(state == 3)
 				{
-					state = 3;
+					state == 1;
 				}
-				else if(menuPosition == 3)
+				SDL_Delay(130);
+			}
+			// If we're in the menu
+			if(state == 1)
+			{
+				if(keyboardstate[SDL_SCANCODE_UP])
 				{
-					state = 4;
+					overLayPosition -= 80;
+					if(overLayPosition > 350)
+						overLayPosition = 190;
+					if(overLayPosition < 190)
+						overLayPosition = 350;
+					menuPosition--;
+					if (menuPosition < 1)
+					{
+						menuPosition = 3;
+						overLayPosition = 350;
+					}
+					else if (menuPosition > 3)
+					{
+						menuPosition = 1;
+						overLayPosition = 190;
+					}
+					SDL_Delay(130);
+				}
+				if(keyboardstate[SDL_SCANCODE_DOWN])
+				{
+					menuPosition++;
+					overLayPosition += 80;
+					if(overLayPosition > 350)
+						overLayPosition = 190;
+					if(overLayPosition < 190)
+						overLayPosition = 350;
+					if (menuPosition > 3)
+					{
+						overLayPosition = 190;
+						menuPosition = 1;
+					}
+					else if (menuPosition < 1)
+					{
+						menuPosition = 3;
+						overLayPosition = 350;
+					}
+					SDL_Delay(130);
+				}
+				if(keyboardstate[SDL_SCANCODE_RETURN])
+				{
+					if(menuPosition == 1)
+					{
+						state = 2;
+					}
+					else if(menuPosition == 2)
+					{
+						state = 3;
+					}
+					else if(menuPosition == 3)
+					{
+						state = 4;
+					}
 				}
 			}
 		}
@@ -116,11 +121,6 @@ class cGameState
 		{
 			// Draw intro here
 			renderTexture(sIntroscreen, ren, 0, 0);
-			SDL_Delay(5000);
-			renderTexture(sControlscreen, ren, 0, 0);
-			SDL_Delay(5000);
-			// Jump to menu when we're done
-			state = 1;
 		}
 		
 		// Draw menu if we're in the pause/menu state
