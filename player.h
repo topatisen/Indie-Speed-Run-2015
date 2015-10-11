@@ -261,20 +261,20 @@ class cPlayer
 
 		// Ammo bars
 		// red
-		ammoRNew.x = x-64+viewx+284;
+		ammoRNew.x = x-64+viewx+184;
 		ammoRNew.y = y-64+viewy-96;
 		ammoRNew.w = ammoR*0.64;
-		ammoRNew.h = 32;
+		ammoRNew.h = 16;
 		// green
-		ammoGNew.x = x-64+viewx+284;
+		ammoGNew.x = x-64+viewx+184;
 		ammoGNew.y = y-64+viewy-64;
 		ammoGNew.w = ammoG*0.64;
-		ammoGNew.h = 32;	
+		ammoGNew.h = 16;	
 		// blue
-		ammoBNew.x = x-64+viewx+284;
+		ammoBNew.x = x-64+viewx+184;
 		ammoBNew.y = y-64+viewy-32;
 		ammoBNew.w = ammoB*0.64;
-		ammoBNew.h = 32;	
+		ammoBNew.h = 16;	
 
 		if(playerHealth < 100)
 		{
@@ -445,9 +445,9 @@ class cPlayer
 			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,90,NULL,SDL_FLIP_NONE);
 		//renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		
-		renderTexture(rHexMessage, ren, 630, 136);
-		renderTexture(gHexMessage, ren, 630, 166);
-		renderTexture(bHexMessage, ren, 630, 196);
+		renderTexture(rHexMessage, ren, 530, 136);
+		renderTexture(gHexMessage, ren, 530, 166);
+		renderTexture(bHexMessage, ren, 530, 196);
 		
 		SDL_SetTextureColorMod(sRBar,255,0,0);
 		SDL_SetTextureColorMod(sGBar,0,255,0);
