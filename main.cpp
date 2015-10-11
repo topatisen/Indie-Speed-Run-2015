@@ -114,7 +114,7 @@ mt.max();
 	globB = 100;
 	/* {{{ Textures */
 	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
-	SDL_Texture *sGoal = loadTexture("sEnemy.png", renderer);
+	SDL_Texture *sGoal = loadTexture("sGoal.png", renderer);
 	SDL_Texture *sBullet = loadTexture("sBullet.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBlock = loadTexture("sBlock.png", renderer);
@@ -373,7 +373,7 @@ mt.max();
 			oMapMaker.draw(renderer, sBlock, sEnemy);//new sprite later
 			//Player
 
-			renderTexture(sGoal, renderer, -768+viewx, -568+viewy);
+			renderTexture(sGoal, renderer, -736+viewx, -568+viewy);
 			oPlayer.draw(renderer, sPlayer,sHealthbar, sBullet, sRBar, sGBar, sBBar, fFont);
 			
 			//oSpawner.draw(renderer, sEnemy);
