@@ -101,7 +101,9 @@ mt.max();
 	//{/* {{{ SDL event */
 	SDL_Event e;
 	//}/* }}} */
-	
+	globR = 100;
+	globG = 100;
+	globB = 100;
 	/* {{{ Textures */
 	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sBullet = loadTexture("sEnemy.png", renderer);
@@ -146,6 +148,18 @@ mt.max();
 		
 		//Logical, magical!
 			
+		if(globR < 1)
+		globR = 1;
+		if(globG < 1)
+		globG = 1;
+		if(globB < 1)
+		globB = 1;
+		if(globR > 254)
+		globR = 254;
+		if(globG > 254)
+		globG = 254;
+		if(globB > 254)
+		globB = 254;
 		oGame.run(keyboardstate);
 		if(oGame.state ==2)
 		{
@@ -176,10 +190,10 @@ mt.max();
 			{
 				for(int g = 0; g<8;g++)
 				{
-					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollisionBullet(oPlayer.oBullet[t].x+8, oPlayer.oBullet[t].y+8,4);
+					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollisionBullet(oPlayer.oBullet[t].x+8, oPlayer.oBullet[t].y+8,8);
 					if(oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].hit == true)
 					{
-						oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].alive = false;
+						//oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].alive = false;
 					}
 				}
 			}

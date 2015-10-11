@@ -101,9 +101,18 @@ class cEnemy
 			playerHealth -= 20;
 			if(addColor == false)
 			{
+			if(globR > 1)
+			{
 				globR += col1*0.1;
+			}
+			if(globG > 1)
+			{
 				globG += col2*0.1;
+			}
+			if(globB > 1)
+			{
 				globB += col3*0.1;
+			}
 				addColor = true;
 			}
 			alive = false;
@@ -158,7 +167,18 @@ class cEnemy
 	{
 		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
 		{
-			hit = true;
+			if(globR > 0)
+			{
+				col1 -= 1;
+			}
+			if(globG > 0)
+			{
+				col2 -= 1;
+			}
+			if(globB > 0)
+			{
+				col3 -= 1;
+			}
 			if(x >= otherx)
 			hspeed += ((otherx-x)*(otherx-x)/80);
 			if(x <= otherx)

@@ -78,9 +78,19 @@ class cBullet
 		color1 = col1;
 		color2 = col2;
 		color3 = col3;
-		globR -= 1;
-		globG -= 1;
-		globB -= 1;
+		if(globR > 1)
+		{
+			globR -= 1;
+		}
+		if(globG > 1)
+		{
+			globG -= 1;
+		}
+		if(globB > 1)
+		{
+			globB -= 1;
+		}
+
 
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
@@ -311,7 +321,7 @@ class cPlayer
 			if(shootTimer >6)
 			{
 				oBullet[bulletNum].direction = shootingDir;
-				oBullet[bulletNum].shoot(x,y, ammoR, ammoG, ammoB);
+				oBullet[bulletNum].shoot(x+8,y+8, globR, globG, globB);
 				
 				bulletNum ++;
 				shootTimer = 0;
