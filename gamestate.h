@@ -25,7 +25,7 @@ class cGameState
 		menuPosition = 1;
 		overLayPosition = 190;
 		// First state is playing
-		state = 2;
+		state = 0;
 	}
 
 	// Handles events
@@ -108,23 +108,27 @@ class cGameState
 		}
 	}
 	// Draws to renderer
-	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector, SDL_Texture *sAboutOverlay)
+	int draw(SDL_Renderer *ren, SDL_Texture *sMenuOverlay, SDL_Texture *sMenuSelector, SDL_Texture *sAboutOverlay, SDL_Texture *sIntroscreen, SDL_Texture *sControlscreen)
 	{
 		//Draw Code
 		// Draw the intro thingie
 		if (state == 0)
 		{
 			// Draw intro here
-			// Currently, skip directly to menu
+			renderTexture(sIntroscreen, ren, 0, 0);
+			SDL_Delay(5000);
+			renderTexture(sControlscreen, ren, 0, 0);
+			SDL_Delay(5000);
+			// Jump to menu when we're done
 			state = 1;
 		}
 		
 		// Draw menu if we're in the pause/menu state
 		if(state == 1)
 		{
+			//Draw menu here
 			renderTexture(sMenuOverlay, ren, 0, 0);
 			renderTexture(sMenuSelector, ren, 140, overLayPosition);
-			//Draw menu here
 		}
 
 		if(state == 2)
