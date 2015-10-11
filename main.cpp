@@ -50,17 +50,6 @@ enemyAmount = 0;
 
 bool levelCleared = false;
 
-std::mt19937 mt(1);
-std::uniform_int_distribution<int32_t> intDist(1,2);
-mt.max();
-
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
 	//quit-flag
 	bool quit;
 	//{/* {{{ FPS-limit tjofrees */
@@ -134,7 +123,8 @@ mt.max();
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sEnding = loadTexture("sEnding.png", renderer);
-	SDL_Texture *levelTexture;
+	SDL_Texture *levelMsg;
+	SDL_Texture *enemyMsg;
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -164,7 +154,8 @@ mt.max();
 	
 	int level = 0;
 
-	char levelMsg[10];
+	char levelTxt[10];
+	char enemyTxt[30];
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -177,17 +168,19 @@ mt.max();
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
 		// Set level
-		sprintf(levelMsg,"Level: %i",level);
+		sprintf(levelTxt,"Level: %i",level);
+		sprintf(enemyTxt,"%i enemies left", enemyAmount-enemyCheck);
 		//cleared level
 		if(enemyCheck > 140)
 		{
 			levelCleared = true;
 		}
-		printf("%lu\n", enemyCheck);
-		printf("%lu\n", enemyAmount);
+		//printf("%lu\n", enemyCheck);
+		//printf("%lu\n", enemyAmount);
 		
 		if(playerHealth < 0)
 		{
+			enemyCheck = 0;
 			dead = true;
 			restart = true;
 		}
@@ -357,7 +350,8 @@ mt.max();
 		/* {{{ DRAW */
 		if( frameTicks < SCREEN_TICK_PER_FRAME )
 		{
-			levelTexture = createTextMessage(font, {255,255,255}, level, ren);
+			levelMsg = createTextMessage(fFont, {255,255,255}, levelTxt, renderer);
+			enemyMsg = createTextMessage(fFont, {255,255,255}, enemyTxt, renderer);
 			//Wait remaining time
 			//SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 			
@@ -382,7 +376,8 @@ mt.max();
 			//renderTexture(msgInfo, renderer, 10, 10);
 			if(oGame.state == 2)
 			{
-				renderTexture(levelTexture, ren, 20, 20);
+				renderTexture(levelMsg, renderer, 20, 20);
+				renderTexture(enemyMsg, renderer, 20, 40);
 			}
 			if(oGame.state == 1)
 			{
