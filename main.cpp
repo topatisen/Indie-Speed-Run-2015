@@ -54,17 +54,6 @@ enemyAmount = 0;
 
 bool levelCleared = false;
 
-std::mt19937 mt(1);
-std::uniform_int_distribution<int32_t> intDist(1,2);
-mt.max();
-
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
-	printf("%lu\n", mt);
 	//quit-flag
 	bool quit;
 	//{/* {{{ FPS-limit tjofrees */
@@ -161,6 +150,9 @@ mt.max();
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sEnding = loadTexture("sEnding.png", renderer);
+	SDL_Texture *sBarLay = loadTexture("sBarLay.png", renderer);
+	SDL_Texture *levelMsg;
+	SDL_Texture *enemyMsg;
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -189,11 +181,17 @@ mt.max();
 	int endTimer = 0;
 	
 	int level = 0;
+<<<<<<< HEAD
 	
 	playLevel = false;
 
 	int musicTimer = 2040;
 	Mix_PlayMusic( sndLevel, -1 );
+=======
+
+	char levelTxt[10];
+	char enemyTxt[30];
+>>>>>>> ca72cfba0ddfd30484c018cdb2918bb4060fa5d6
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -205,16 +203,20 @@ mt.max();
 		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
+		// Set level
+		sprintf(levelTxt,"Level: %i",level);
+		sprintf(enemyTxt,"%i enemies left", enemyAmount-enemyCheck);
 		//cleared level
-		if(enemyCheck > 10)
+		if(enemyCheck > 140)
 		{
 			levelCleared = true;
 		}
-		printf("%lu\n", enemyCheck);
-		printf("%lu\n", enemyAmount);
+		//printf("%lu\n", enemyCheck);
+		//printf("%lu\n", enemyAmount);
 		
 		if(playerHealth < 0)
 		{
+			enemyCheck = 0;
 			dead = true;
 			restart = true;
 		}
@@ -266,8 +268,13 @@ mt.max();
 		if((oGame.state == 2))
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
+<<<<<<< HEAD
 		oPlayer.run(event, sndShoot);
 		if(level == 1)
+=======
+		oPlayer.run(event);
+		if(level == 9)
+>>>>>>> ca72cfba0ddfd30484c018cdb2918bb4060fa5d6
 		{
 			ending = true;
 		}
@@ -384,6 +391,8 @@ mt.max();
 		/* {{{ DRAW */
 		if( frameTicks < SCREEN_TICK_PER_FRAME )
 		{
+			levelMsg = createTextMessage(fFont, {255,255,255}, levelTxt, renderer);
+			enemyMsg = createTextMessage(fFont, {255,255,255}, enemyTxt, renderer);
 			//Wait remaining time
 			//SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 			
@@ -399,13 +408,18 @@ mt.max();
 			oMapMaker.draw(renderer, sBlock, sEnemy);//new sprite later
 			//Player
 
+			oPlayer.draw(renderer, sPlayer,sHealthbar, sBullet, sRBar, sGBar, sBBar, fFont, sBarLay);
+			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			renderTexture(sGoal, renderer, -736+viewx, -568+viewy);
-			oPlayer.draw(renderer, sPlayer,sHealthbar, sBullet, sRBar, sGBar, sBBar, fFont);
 			
 			//oSpawner.draw(renderer, sEnemy);
 			
-			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			//renderTexture(msgInfo, renderer, 10, 10);
+			if(oGame.state == 2)
+			{
+				renderTexture(levelMsg, renderer, 20, 20);
+				renderTexture(enemyMsg, renderer, 20, 40);
+			}
 			if(oGame.state == 1)
 			{
 				renderTexture(sControls, renderer, 400, 300);
