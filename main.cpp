@@ -32,8 +32,8 @@ int enemyAmount;
 #include "player.h" //player-header
 #include "block.h" //block-header, also dungeon generator
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 960
 
 
 
@@ -245,8 +245,8 @@ mt.max();
 			}
 		}
 		
-		viewx = 400+(-oPlayer.x);
-		viewy = 300+(-oPlayer.y);
+		viewx = 320+(-oPlayer.x);
+		viewy = 240+(-oPlayer.y);
 
 		//Check collisions for all blocks test
 		for(int p = 0; p<10;p++)
@@ -311,6 +311,9 @@ mt.max();
 			
 			//}/* }}} */
 			//render texture
+			SDL_RenderSetScale(renderer,
+                       2,
+                       2);
 			SDL_RenderPresent(renderer);
 		}
 		/* }}} */
