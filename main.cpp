@@ -181,17 +181,17 @@ bool levelCleared = false;
 	int endTimer = 0;
 	
 	int level = 0;
-<<<<<<< HEAD
+
 	
 	playLevel = false;
 
 	int musicTimer = 2040;
 	Mix_PlayMusic( sndLevel, -1 );
-=======
+
 
 	char levelTxt[10];
 	char enemyTxt[30];
->>>>>>> ca72cfba0ddfd30484c018cdb2918bb4060fa5d6
+
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -205,9 +205,9 @@ bool levelCleared = false;
 
 		// Set level
 		sprintf(levelTxt,"Level: %i",level);
-		sprintf(enemyTxt,"%i enemies left", enemyAmount-enemyCheck);
+		sprintf(enemyTxt,"%i enemies left", 80-enemyCheck);
 		//cleared level
-		if(enemyCheck > 140)
+		if(enemyCheck > 80)
 		{
 			levelCleared = true;
 		}
@@ -237,7 +237,7 @@ bool levelCleared = false;
 			
 			if(oPlayer.x+32>-768&&oPlayer.x < -736&&oPlayer.y+32>-568&&oPlayer.y<-536)
 			{
-			elevTimer = 10;
+				elevTimer = 10;
 				nextLevel = true;
 				enemyCheck = 0;
 				enemyAmount = 0;
@@ -268,13 +268,10 @@ bool levelCleared = false;
 		if((oGame.state == 2))
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
-<<<<<<< HEAD
 		oPlayer.run(event, sndShoot);
-		if(level == 1)
-=======
-		oPlayer.run(event);
+
 		if(level == 9)
->>>>>>> ca72cfba0ddfd30484c018cdb2918bb4060fa5d6
+
 		{
 			ending = true;
 		}

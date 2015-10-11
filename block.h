@@ -162,7 +162,7 @@ class cEnemy
 		vspeed = -2;
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(24))
 		{
-			playerHealth -= 15;
+			playerHealth -= 10;
 			if(addColor == false)
 			{
 			
