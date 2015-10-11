@@ -6,7 +6,7 @@
 rm=/bin/rm -f
 CXX= g++
 DEFS=  
-PROGNAME= main
+PROGNAME= game
 INCLUDES=  -I. -I /usr/include/
 LIBS= -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
