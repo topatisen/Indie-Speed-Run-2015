@@ -23,7 +23,7 @@ class cGameState
 	{
 		// Initialize variables
 		menuPosition = 1;
-		overLayPosition = 240;
+		overLayPosition = 190;
 		// First state is playing
 		state = 2;
 	}
@@ -52,41 +52,41 @@ class cGameState
 		{
 			if(keyboardstate[SDL_SCANCODE_UP])
 			{
-				overLayPosition -= 100;
-				if(overLayPosition > 440)
-					overLayPosition = 240;
-				if(overLayPosition < 240)
-					overLayPosition = 440;
+				overLayPosition -= 80;
+				if(overLayPosition > 350)
+					overLayPosition = 190;
+				if(overLayPosition < 190)
+					overLayPosition = 350;
 				menuPosition--;
 				if (menuPosition < 1)
 				{
 					menuPosition = 3;
-					overLayPosition = 440;
+					overLayPosition = 350;
 				}
 				else if (menuPosition > 3)
 				{
 					menuPosition = 1;
-					overLayPosition = 240;
+					overLayPosition = 190;
 				}
 				SDL_Delay(130);
 			}
 			if(keyboardstate[SDL_SCANCODE_DOWN])
 			{
 				menuPosition++;
-				overLayPosition += 100;
-				if(overLayPosition > 440)
-					overLayPosition = 240;
-				if(overLayPosition < 240)
-					overLayPosition = 440;
+				overLayPosition += 80;
+				if(overLayPosition > 350)
+					overLayPosition = 190;
+				if(overLayPosition < 190)
+					overLayPosition = 350;
 				if (menuPosition > 3)
 				{
-					overLayPosition = 240;
+					overLayPosition = 190;
 					menuPosition = 1;
 				}
 				else if (menuPosition < 1)
 				{
 					menuPosition = 3;
-					overLayPosition = 440;
+					overLayPosition = 350;
 				}
 				SDL_Delay(130);
 			}
@@ -123,7 +123,7 @@ class cGameState
 		if(state == 1)
 		{
 			renderTexture(sMenuOverlay, ren, 0, 0);
-			renderTexture(sMenuSelector, ren, 200, overLayPosition);
+			renderTexture(sMenuSelector, ren, 140, overLayPosition);
 			//Draw menu here
 		}
 
