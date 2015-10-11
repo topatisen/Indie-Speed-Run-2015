@@ -31,8 +31,10 @@ class cGameState
 	// Handles events
 	int run(const Uint8 *keyboardstate, int fpsPassed)
 	{
-		if( fpsPassed > 200)
+		if( fpsPassed > 200 && state == 0)
+		{
 			state = 1;
+		}
 		if(state != 0) 
 		{
 			if(keyboardstate[SDL_SCANCODE_ESCAPE])
