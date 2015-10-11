@@ -123,6 +123,7 @@ bool levelCleared = false;
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sEnding = loadTexture("sEnding.png", renderer);
+	SDL_Texture *sBarLay = loadTexture("sBarLay.png", renderer);
 	SDL_Texture *levelMsg;
 	SDL_Texture *enemyMsg;
 	/* }}} */
@@ -378,6 +379,7 @@ bool levelCleared = false;
 			{
 				renderTexture(levelMsg, renderer, 20, 20);
 				renderTexture(enemyMsg, renderer, 20, 40);
+				renderTexture(sBarLay, renderer, 0, 0);
 			}
 			if(oGame.state == 1)
 			{
