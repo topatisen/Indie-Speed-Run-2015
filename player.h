@@ -445,9 +445,9 @@ class cPlayer
 			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,90,NULL,SDL_FLIP_NONE);
 		//renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		
-		renderTexture(rHexMessage, ren, 550, 136);
-		renderTexture(gHexMessage, ren, 550, 166);
-		renderTexture(bHexMessage, ren, 550, 196);
+		renderTexture(rHexMessage, ren, 520, 80);
+		renderTexture(gHexMessage, ren, 520, 110);
+		renderTexture(bHexMessage, ren, 520, 140);
 		
 		SDL_SetTextureColorMod(sRBar,255,0,0);
 		SDL_SetTextureColorMod(sGBar,0,255,0);

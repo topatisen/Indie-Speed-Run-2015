@@ -134,6 +134,7 @@ mt.max();
 	SDL_Texture *sControls = loadTexture("sControls.png", renderer);
 	SDL_Texture *sIntroscreen = loadTexture("sIntroscreen.png", renderer);
 	SDL_Texture *sEnding = loadTexture("sEnding.png", renderer);
+	SDL_Texture *levelTexture;
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -162,6 +163,8 @@ mt.max();
 	int endTimer = 0;
 	
 	int level = 0;
+
+	char levelMsg[10];
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -173,8 +176,10 @@ mt.max();
 		/* {{{ Keyboard presses, mouse events osv.*/
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
+		// Set level
+		sprintf(levelMsg,"Level: %i",level);
 		//cleared level
-		if(enemyCheck > 10)
+		if(enemyCheck > 140)
 		{
 			levelCleared = true;
 		}
@@ -235,7 +240,7 @@ mt.max();
 		{
 		oMapMaker.makeMap(oPlayer.x+16, oPlayer.y+16);
 		oPlayer.run(event);
-		if(level == 1)
+		if(level == 9)
 		{
 			ending = true;
 		}
@@ -352,6 +357,7 @@ mt.max();
 		/* {{{ DRAW */
 		if( frameTicks < SCREEN_TICK_PER_FRAME )
 		{
+			levelTexture = createTextMessage(font, {255,255,255}, level, ren);
 			//Wait remaining time
 			//SDL_Delay(SCREEN_TICK_PER_FRAME - frameTicks);
 			
@@ -374,6 +380,10 @@ mt.max();
 			
 			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay, sIntroscreen, sControlscreen);
 			//renderTexture(msgInfo, renderer, 10, 10);
+			if(oGame.state == 2)
+			{
+				renderTexture(levelTexture, ren, 20, 20);
+			}
 			if(oGame.state == 1)
 			{
 				renderTexture(sControls, renderer, 400, 300);
