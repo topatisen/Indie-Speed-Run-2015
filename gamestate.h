@@ -31,7 +31,7 @@ class cGameState
 	// Handles events
 	int run(const Uint8 *keyboardstate, int fpsPassed)
 	{
-		if( fpsPassed > 200 && state == 0)
+		if( fpsPassed > 400 && state == 0)
 		{
 			state = 1;
 		}
