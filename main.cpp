@@ -100,7 +100,7 @@ mt.max();
 	
 	//{/* {{{ Load a font */
 	TTF_Font *fFont = NULL;
-	fFont = TTF_OpenFont("font.ttf", 24);
+	fFont = TTF_OpenFont("font.ttf", 14);
 	SDL_Color black = {0, 0, 0};
 	SDL_Color white = {255, 255, 255};
 	//}/* }}} */
