@@ -123,6 +123,7 @@ mt.max();
 	SDL_Texture *sBBar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
+	SDL_Texture *sBlackBackground = loadTexture("sBlackBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
@@ -293,8 +294,8 @@ mt.max();
 			/* {{{ DRAW HERE */
 			// Draw background
 			
-			
-			renderTexture(sBackground, renderer, 0, 0);
+			renderTexture(sBlackBackground, renderer, 0, 0);
+			renderTexture(sBackground, renderer, -800+viewx, -608+viewy);
 			
 			// Menu and points and stuff
 
