@@ -115,19 +115,20 @@ mt.max();
 	/* {{{ Textures */
 	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sGoal = loadTexture("sEnemy.png", renderer);
-	SDL_Texture *sBullet = loadTexture("sEnemy.png", renderer);
+	SDL_Texture *sBullet = loadTexture("sBullet.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBlock = loadTexture("sBlock.png", renderer);
 	SDL_Texture *sHealthbar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sRBar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sGBar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sBBar = loadTexture("sRectangle.png", renderer);
-	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sPlayer= loadTexture("sPlayer.png", renderer);
 	SDL_Texture *sBackground = loadTexture("sBackground.png", renderer);
 	SDL_Texture *sBlackBackground = loadTexture("sBlackBackground.png", renderer);
 	SDL_Texture *sMenuOverlay = loadTexture("sMenuOverlay.png", renderer);
 	SDL_Texture *sMenuSelector = loadTexture("sMenuSelector.png", renderer);
 	SDL_Texture *sAboutOverlay = loadTexture("sAboutOverlay.png", renderer);
+	SDL_Texture *sElevatorScreen = loadTexture("sElevatorScreen.png", renderer);
 	/* }}} */
 	
 	float avgFPS = 0;
@@ -147,6 +148,9 @@ mt.max();
 	bool nextLevel = false;
 	bool restart = false;
 	
+	bool elevator = false;
+	
+	int elevTimer = 10;
 	//while not quitting (gameloop)
 	while(oGame.state != 4) {
 		//fps
@@ -159,7 +163,7 @@ mt.max();
 		const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
 
 		//cleared level
-		if(enemyCheck > 140)
+		if(enemyCheck > 10)
 		{
 			levelCleared = true;
 		}
@@ -186,12 +190,14 @@ mt.max();
 			
 			if(oPlayer.x+32>-768&&oPlayer.x < -736&&oPlayer.y+32>-568&&oPlayer.y<-536)
 			{
+			elevTimer = 10;
 				nextLevel = true;
 				enemyCheck = 0;
 				enemyAmount = 0;
 				oMapMaker.create();
 				oPlayer.x = 736;
 				oPlayer.y = 536;
+				elevator = true;
 				levelCleared = false;
 			}
 		
@@ -217,7 +223,20 @@ mt.max();
 		oPlayer.run(event);
 		
 		//run spawner
-		
+		if(elevator == true)
+			{
+				if(elevTimer > 0)
+				{
+					elevTimer --;
+				}
+				else
+				{
+					SDL_Delay(3000);
+					elevator = false;
+					elevTimer = 10;
+				}
+				
+			}
 		//check collisions enemies -> blocks
 		for(int t = 0; t<10;t++)
 		{
@@ -311,6 +330,10 @@ mt.max();
 			oGame.draw(renderer, sMenuOverlay, sMenuSelector, sAboutOverlay);
 			renderTexture(msgInfo, renderer, 10, 10);
 			
+			if(elevator == true)
+			{
+				renderTexture(sElevatorScreen, renderer, 0, 0);
+			}
 			//}/* }}} */
 			//render texture
 			SDL_RenderSetScale(renderer,

@@ -108,6 +108,9 @@ class cPlayer
 	
 	cBullet oBullet[8];
 	
+	//Player rectangle
+	SDL_Rect rPlayerOrig;
+	SDL_Rect rPlayerNew;
 	
 	//rectangle for healthbar
 	SDL_Rect rectOrig;
@@ -187,7 +190,7 @@ class cPlayer
 		ammoBOrig.y = 0;
 		ammoBOrig.w = 32;
 		ammoBOrig.h = 32;
-
+		shootingDir = 1;
 		walkRight = false;
 		walkLeft = false;
 		walkUp = false;
@@ -197,6 +200,15 @@ class cPlayer
 		vspeed = 0;
 		hspeed = 0;
 		//Create Code
+		rPlayerOrig.x = 0;
+		rPlayerOrig.y = 0;
+		rPlayerOrig.w = 32;
+		rPlayerOrig.h = 32;
+		
+		rPlayerNew.x = 0;
+		rPlayerNew.y = 0;
+		rPlayerNew.w = 32;
+		rPlayerNew.h = 32;
 	}
 	
 	void checkCollision(float x2, float y2)
@@ -235,6 +247,12 @@ class cPlayer
 		{
 			bulletNum = 0;
 		}
+		//player
+		rPlayerNew.x = x+viewx;
+		rPlayerNew.y = y+viewy;
+		rPlayerNew.w = 32;
+		rPlayerNew.h = 32;
+		
 		//healthbar
 		rectNew.x = x-16+viewx;
 		rectNew.y = y-32+viewy;
@@ -417,11 +435,16 @@ class cPlayer
 		SDL_RenderCopyEx(ren, sRBar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
 		SDL_RenderCopyEx(ren, sGBar, &ammoGOrig, &ammoGNew,0,NULL,SDL_FLIP_NONE);
 		SDL_RenderCopyEx(ren, sBBar, &ammoBOrig, &ammoBNew,0,NULL,SDL_FLIP_NONE);
-		renderTexture(sPlayer, ren, x+viewx, y+viewy);
-		SDL_SetTextureColorMod(sPlayer,
-                           ammoR,
-                           ammoG,
-                           ammoB);
+		if(shootingDir == 0)
+			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,180,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 1)
+			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,270,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 2)
+			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,0,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 3)
+			SDL_RenderCopyEx(ren, sPlayer, &rPlayerOrig, &rPlayerNew,90,NULL,SDL_FLIP_NONE);
+		//renderTexture(sPlayer, ren, x+viewx, y+viewy);
+		
 		renderTexture(rHexMessage, ren, 630, 136);
 		renderTexture(gHexMessage, ren, 630, 166);
 		renderTexture(bHexMessage, ren, 630, 196);

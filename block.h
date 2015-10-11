@@ -68,8 +68,11 @@ class cEnemy
 {
 	public:
 		float x, y, vspeed, hspeed, color1, color2, color3,dx, dy;
-		int stColR,stColG,stColB;
+		int stColR,stColG,stColB, shootingDir;
 				
+			//Player rectangle
+	SDL_Rect rPlayerOrig;
+	SDL_Rect rPlayerNew;		
 				
 		bool alive;
 		bool hit;
@@ -94,9 +97,22 @@ class cEnemy
 		addColor = false;
 		alive = true;
 		hit = false;
+				rPlayerOrig.x = 0;
+		rPlayerOrig.y = 0;
+		rPlayerOrig.w = 32;
+		rPlayerOrig.h = 32;
+		
+		rPlayerNew.x = 0;
+		rPlayerNew.y = 0;
+		rPlayerNew.w = 32;
+		rPlayerNew.h = 32;
 	}
 	void run(float targetx, float targety)
 	{
+		rPlayerNew.x = x+viewx;
+		rPlayerNew.y = y+viewy;
+		rPlayerNew.w = 32;
+		rPlayerNew.h = 32;
 		if(stColR > 254)
 			stColR = 254;
 		if(stColG > 254)
@@ -146,7 +162,7 @@ class cEnemy
 		vspeed = -2;
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(24))
 		{
-			playerHealth -= 20;
+			playerHealth -= 15;
 			if(addColor == false)
 			{
 			
@@ -176,18 +192,22 @@ class cEnemy
 		{
 		if(x+8 > targetx)
 		{
+			shootingDir = 3;
 			hspeed -= 0.25;
 		}
 		if(x+8 < targetx)
 		{
+			shootingDir = 1;
 			hspeed += 0.25;
 		}
 		if(y+8 < targety)
 		{
+			shootingDir = 2;
 			vspeed += 0.25;
 		}
 		if(y+8 > targety)
 		{
+			shootingDir = 0;
 			vspeed -= 0.25;
 		}
 		}
@@ -253,7 +273,14 @@ class cEnemy
                            stColR,
                            stColG,
                            stColB);
-			renderTexture(sEnemy, ren, x+viewx, y+viewy);
+		if(shootingDir == 0)
+			SDL_RenderCopyEx(ren, sEnemy, &rPlayerOrig, &rPlayerNew,180,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 1)
+			SDL_RenderCopyEx(ren, sEnemy, &rPlayerOrig, &rPlayerNew,270,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 2)
+			SDL_RenderCopyEx(ren, sEnemy, &rPlayerOrig, &rPlayerNew,0,NULL,SDL_FLIP_NONE);
+		if(shootingDir == 3)
+			SDL_RenderCopyEx(ren, sEnemy, &rPlayerOrig, &rPlayerNew,90,NULL,SDL_FLIP_NONE);
 		
 		}
 	}
