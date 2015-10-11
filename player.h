@@ -109,6 +109,12 @@ class cPlayer
 	SDL_Rect ammoBOrig;
 	SDL_Rect ammoBNew;
 
+	char rHex[5];
+	char gHex[5];
+	char bHex[5];
+	SDL_Texture *rHexMessage;
+	SDL_Texture *gHexMessage;
+	SDL_Texture *bHexMessage;
 	float x, y, vspeed, hspeed, enemyX, enemyY;
 	int ammoR, ammoG, ammoB, bulletNum, shootingDir, shootTimer;
 	bool walkRight, walkLeft, walkUp, walkDown, shooting;
@@ -129,15 +135,45 @@ class cPlayer
 		rectOrig.w = 32;
 		rectOrig.h = 32;
 
-		ammoR = 0;
-		ammoG = 255;
-		ammoB = 0;
+		rectNew.x = 0;
+		rectNew.y = 0;
+		rectNew.w = 128;
+		rectNew.h = 16;
 
-		ammoRNew.x = 15;
-		ammoRNew.y = 15;
+
+		ammoR = 173;
+		ammoG = 255;
+		ammoB = 12;
+
+		ammoRNew.x = 0;
+		ammoRNew.y = 0;
 		ammoRNew.w = 128;
 		ammoRNew.h = 16;
+
 		ammoROrig.x = 0;
+		ammoROrig.y = 0;
+		ammoROrig.w = 32;
+		ammoROrig.h = 32;
+
+		ammoGNew.x = 0;
+		ammoGNew.y = 0;
+		ammoGNew.w = 128;
+		ammoGNew.h = 16;
+
+		ammoGOrig.x = 0;
+		ammoGOrig.y = 0;
+		ammoGOrig.w = 32;
+		ammoGOrig.h = 32;
+
+		ammoBNew.x = 0;
+		ammoBNew.y = 0;
+		ammoBNew.w = 128;
+		ammoBNew.h = 16;
+
+		ammoBOrig.x = 0;
+		ammoBOrig.y = 0;
+		ammoBOrig.w = 32;
+		ammoBOrig.h = 32;
 
 		walkRight = false;
 		walkLeft = false;
@@ -191,6 +227,24 @@ class cPlayer
 		rectNew.y = y-32+viewy;
 		rectNew.w = playerHealth*0.64;
 		rectNew.h = 16;
+
+		// Ammo bars
+		// red
+		ammoRNew.x = x-64+viewx+284;
+		ammoRNew.y = y-64+viewy-96;
+		ammoRNew.w = ammoR*0.64;
+		ammoRNew.h = 32;
+		// green
+		ammoGNew.x = x-64+viewx+284;
+		ammoGNew.y = y-64+viewy-64;
+		ammoGNew.w = ammoG*0.64;
+		ammoGNew.h = 32;	
+		// blue
+		ammoBNew.x = x-64+viewx+284;
+		ammoBNew.y = y-64+viewy-32;
+		ammoBNew.w = ammoB*0.64;
+		ammoBNew.h = 32;	
+
 		if(playerHealth < 100)
 		{
 			playerHealth += 0.25;
@@ -326,9 +380,15 @@ class cPlayer
 					}
 			}	
 		}
+		sprintf(rHex,"0x%02X",ammoR);
+		sprintf(gHex,"0x%02X",ammoG);
+		sprintf(bHex,"0x%02X",ammoB);
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet )
+	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet, SDL_Texture *sRBar, SDL_Texture *sGBar, SDL_Texture *sBBar, TTF_Font *font)
 	{
+		rHexMessage = createTextMessage(font, {255,255,255}, rHex, ren);
+		gHexMessage = createTextMessage(font, {255,255,255}, gHex, ren);
+		bHexMessage = createTextMessage(font, {255,255,255}, bHex, ren);
 		//Draw Code
 		for(int i = 0;i<8;i++)
 		{
@@ -336,12 +396,22 @@ class cPlayer
 		}
 		//healthbar
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
-		SDL_RenderCopyEx(ren, sHealthbar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
+		// Ammobars
+		SDL_RenderCopyEx(ren, sRBar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sGBar, &ammoGOrig, &ammoGNew,0,NULL,SDL_FLIP_NONE);
+		SDL_RenderCopyEx(ren, sBBar, &ammoBOrig, &ammoBNew,0,NULL,SDL_FLIP_NONE);
 		renderTexture(sPlayer, ren, x+viewx, y+viewy);
 		SDL_SetTextureColorMod(sPlayer,
                            ammoR,
                            ammoG,
                            ammoB);
+		renderTexture(rHexMessage, ren, 630, 136);
+		renderTexture(gHexMessage, ren, 630, 166);
+		renderTexture(bHexMessage, ren, 630, 196);
+		
+		SDL_SetTextureColorMod(sRBar,255,0,0);
+		SDL_SetTextureColorMod(sGBar,0,255,0);
+		SDL_SetTextureColorMod(sBBar,0,0,255);
 	}
 };
 
