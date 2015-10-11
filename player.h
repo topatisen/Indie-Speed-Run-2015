@@ -78,6 +78,9 @@ class cBullet
 		color1 = col1;
 		color2 = col2;
 		color3 = col3;
+		globR -= 1;
+		globG -= 1;
+		globB -= 1;
 
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
