@@ -9,11 +9,12 @@ class cBullet
 {
 	public:
 		float x, y, hspeed, vspeed;
-		int color1, color2, color3;
-		bool alive, isFired;
+		int color1, color2, color3, direction;
+		bool alive, isFired, collision;
 	void create()
 	{
 		isFired = false;
+		collision = false;
 		alive = false;
 		x = -6000;
 		y = -6000;
@@ -23,46 +24,61 @@ class cBullet
 	}
 	void run()
 	{
+		x +=hspeed;
+		y +=vspeed;
 		if(alive == false)
 		{
 			x = -6000;
 			y = -6000;
 		}
 		if(x < -800)
-		hspeed = 2;
+		alive = false;
 		if(x > 800)
-		hspeed = -2;
+		alive = false;
 		if(y < -616)
-		vspeed = 2;
+		alive = false;
 		if(y > 600)
-		vspeed = -2;
+		alive = false;
 	}
-	void shoot(int direction, int col1, int col2, int col3)
+	void checkCollision(float otherx, float othery)
 	{
-		if(isFired == false)
+		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(24))
 		{
-		//direction clockwise starts up 1,2,3,4
-		if(direction == 1)
+			alive = false;
+		}
+	}
+	void shoot(float playerx, float playery, int col1, int col2, int col3)
+	{
+		alive = true;
+		x = playerx;
+		y = playery;
+		
+		//direction clockwise starts up 0,1,2,3
+		if(direction == 0)
 		{
 			vspeed = -8;
+			hspeed = 0;
+		}
+		if(direction == 1)
+		{
+			hspeed = 8;
+			vspeed = 0;
 		}
 		if(direction == 2)
 		{
-			hspeed = 8;
+		
+			hspeed = 0;
+			vspeed = 8;
 		}
 		if(direction == 3)
 		{
-			vspeed = 8;
-		}
-		if(direction == 4)
-		{
 			hspeed = -8;
+			vspeed = 0;
 		}
 		color1 = col1;
 		color2 = col2;
 		color3 = col3;
-		isFired = true;
-		}
+
 	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBullet)
 	{
@@ -76,6 +92,9 @@ class cBullet
 class cPlayer
 {
 	public:
+	
+	cBullet oBullet[8];
+	
 	
 	//rectangle for healthbar
 	SDL_Rect rectOrig;
@@ -91,11 +110,20 @@ class cPlayer
 	SDL_Rect ammoBNew;
 
 	float x, y, vspeed, hspeed, enemyX, enemyY;
-	int ammoR, ammoG, ammoB;
-	bool walkRight, walkLeft, walkUp, walkDown;
+	int ammoR, ammoG, ammoB, bulletNum, shootingDir, shootTimer;
+	bool walkRight, walkLeft, walkUp, walkDown, shooting;
 	bool colRight, colLeft, colUp, colDown;//col = collision
 	void create()
 	{
+		shooting = false;
+		shootTimer = 0;
+		bulletNum = 0;
+		for(int i = 0;i<8;i++)
+		{
+			oBullet[i].create();
+		}
+		shootingDir = 0;
+		
 		rectOrig.x = 0;
 		rectOrig.y = 0;
 		rectOrig.w = 32;
@@ -149,6 +177,15 @@ class cPlayer
 	}
 	void run(SDL_Event event)
 	{
+		//Bullet
+		for(int i = 0;i<8;i++)
+		{
+			oBullet[i].run();
+		}
+		if(bulletNum > 7)
+		{
+			bulletNum = 0;
+		}
 		//healthbar
 		rectNew.x = x-16+viewx;
 		rectNew.y = y-32+viewy;
@@ -181,20 +218,50 @@ class cPlayer
 		y += vspeed;
 		if(walkRight == true)
 		{
+		if(shooting == false)
+		{
+			shootingDir = 1;
+			}
 				hspeed = 2;
 		}
 		if(walkLeft == true)
 		{
+		if(shooting == false)
+		{
+			shootingDir = 3;
+			}
 				hspeed = -2;
 		}
 		if(walkUp == true)
 		{
+		if(shooting == false)
+		{
+			shootingDir = 0;
+			}
 			vspeed = -2;
 		}
 		if(walkDown == true)
 		{
+			if(shooting == false)
+			{
+				shootingDir = 2;
+				}
 				vspeed = 2;
 		}
+		if(shooting == true)
+		{
+			
+			if(shootTimer >6)
+			{
+				oBullet[bulletNum].direction = shootingDir;
+				oBullet[bulletNum].shoot(x,y, ammoR, ammoG, ammoB);
+				
+				bulletNum ++;
+				shootTimer = 0;
+			}
+			shootTimer ++;
+		}
+		
 		//KEYPRESSTEST
 		while (SDL_PollEvent(&event)) {
 			//Kepresses, works like a charm! <3<3<3<3<3
@@ -218,6 +285,11 @@ class cPlayer
 					if(event.key.keysym.sym==SDLK_d)
 					{
 						walkRight = true;
+						break;
+					}
+					if(event.key.keysym.sym==SDLK_SPACE)
+					{
+						shooting = true;
 						break;
 					}
 				case SDL_KEYUP:
@@ -245,12 +317,23 @@ class cPlayer
 						walkRight = false;
 						break;
 					}
+					if(event.key.keysym.sym==SDLK_SPACE)
+					{
+						
+						shootTimer = 6;
+						shooting = false;
+						break;
+					}
 			}	
 		}
 	}
-	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar)
+	void draw(SDL_Renderer *ren, SDL_Texture *sPlayer, SDL_Texture *sHealthbar, SDL_Texture *sBullet )
 	{
 		//Draw Code
+		for(int i = 0;i<8;i++)
+		{
+			oBullet[i].draw(ren,sBullet);
+		}
 		//healthbar
 		SDL_RenderCopyEx(ren, sHealthbar, &rectOrig, &rectNew,0,NULL,SDL_FLIP_NONE);
 		SDL_RenderCopyEx(ren, sHealthbar, &ammoROrig, &ammoRNew,0,NULL,SDL_FLIP_NONE);

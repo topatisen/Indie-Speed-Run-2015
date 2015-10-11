@@ -100,6 +100,7 @@ mt.max();
 	
 	/* {{{ Textures */
 	SDL_Texture *sEnemy = loadTexture("sEnemy.png", renderer);
+	SDL_Texture *sBullet = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sHealthbar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sPlayer= loadTexture("sRectangle.png", renderer);
@@ -146,7 +147,6 @@ mt.max();
 		//run spawner
 		
 		//check collisions enemies -> blocks
-		
 		for(int t = 0; t<20;t++)
 		{
 		for(int p = 0; p<20;p++)
@@ -156,6 +156,24 @@ mt.max();
 				for(int g = 0; g<8;g++)
 				{
 					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[t].oBlock[i].x+8, oMapMaker.oRoomCreator[t].oBlock[i].y+8,24);
+				}
+			}
+		}
+		}
+		//check collisions enemies -> bullets
+		for(int t = 0; t<20;t++)
+		{
+		for(int p = 0; p<20;p++)
+		{
+			for(int i = 0; i<8;i++)
+			{
+				for(int g = 0; g<8;g++)
+				{
+					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollisionBullet(oPlayer.oBullet[t].x+8, oPlayer.oBullet[t].y+8,4);
+					if(oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].hit == true)
+					{
+						oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].alive = false;
+					}
 				}
 			}
 		}
@@ -171,6 +189,19 @@ mt.max();
 				oPlayer.checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x, oMapMaker.oRoomCreator[p].oBlock[i].y);
 			}
 		}
+		//bullet checking solids
+		for(int t = 0; t<8;t++)
+		{
+		for(int p = 0; p<20;p++)
+		{
+			for(int i = 0; i<48;i++)
+			{
+				oPlayer.oBullet[t].checkCollision(oMapMaker.oRoomCreator[p].oBlock[i].x+8, oMapMaker.oRoomCreator[p].oBlock[i].y+8);
+				oMapMaker.oRoomCreator[p].oBlock[i].checkCollision(oPlayer.oBullet[t].x-8,oPlayer.oBullet[t].y-8);
+			}
+		}
+		}
+		
 		
 		}
 		//fps
@@ -203,7 +234,7 @@ mt.max();
 
 			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
 			//Player
-			oPlayer.draw(renderer, sPlayer,sHealthbar);
+			oPlayer.draw(renderer, sPlayer,sHealthbar,sBullet);
 			
 			//oSpawner.draw(renderer, sEnemy);
 			

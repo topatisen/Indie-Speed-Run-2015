@@ -9,9 +9,13 @@
 class cBlock
 {
 	public:
-		int x, y,basecol,color1, color2, color3;
+		int x, y,basecol,color1, color2, color3, life;
+		bool alive, looseLife;
 	void create(float x1, float y1,int col1, int col2, int col3 )
 	{
+		life = 12;
+		alive = true;
+		looseLife = true;
 		color1 = col1+(-20)+pRand()%19+1;
 		color2 = col2+(-20)+pRand()%19+1;
 		color3 = col2+(-20)+pRand()%19+1;
@@ -25,14 +29,27 @@ class cBlock
 	{
 		//Maybe not needed
 	}
-	
+	void checkCollision(float otherx, float othery)
+	{
+		if(sqrt((otherx-x+8)*(otherx-x+8)+(othery-y)*(othery-y))<(24))
+		{
+			
+				life -= 1;
+			
+			if(life < 0)
+			alive = false;
+		}
+	}
 	void draw(SDL_Renderer *ren, SDL_Texture *sBlock)
 	{
-		renderTexture(sBlock, ren, x+viewx, y+viewy);
-		SDL_SetTextureColorMod(sBlock,
+		if(alive == true)
+		{
+			renderTexture(sBlock, ren, x+viewx, y+viewy);
+			SDL_SetTextureColorMod(sBlock,
                            color1,
                            color2,
                            color3);
+		}
 	}
 };
 
@@ -45,6 +62,7 @@ class cEnemy
 				dx, dy;
 				
 		bool alive = false;
+		bool hit = false;
 	void create(float startx, float starty)
 	{
 		col1 = 128;
@@ -55,6 +73,7 @@ class cEnemy
 		hspeed = 0;
 		vspeed = 0;
 		alive = true;
+		hit = false;
 	}
 	void run(float targetx, float targety)
 	{
@@ -114,6 +133,23 @@ class cEnemy
 	{
 		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
 		{
+			
+			if(x >= otherx)
+			hspeed += ((otherx-x)*(otherx-x)/80);
+			if(x <= otherx)
+			hspeed -= ((otherx-x)*(otherx-x)/80);
+			if(y >= othery)
+			vspeed += ((othery-y)*(othery-y)/80);
+			if(y <= othery)
+			vspeed -= ((othery-y)*(othery-y)/80);
+		}
+	}
+	//collision with other enemies
+	void checkCollisionBullet(float otherx, float othery,float otherradius)
+	{
+		if(sqrt((otherx-x)*(otherx-x)+(othery-y)*(othery-y))<(4+otherradius)) 
+		{
+			hit = true;
 			if(x >= otherx)
 			hspeed += ((otherx-x)*(otherx-x)/80);
 			if(x <= otherx)
@@ -207,6 +243,11 @@ class cRoomCreator
 	}
 	void generateRoom(float targetx, float targety)
 	{
+	for(int i = 0;i<blockAmount;i++)
+		{
+			if(oBlock[i].alive == false)
+			oBlock[i].x = -6000;
+		}
 	if(roomFinished == true)
 	oSpawner.run(targetx, targety);
 	if(roomFinished == false){
