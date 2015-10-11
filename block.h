@@ -136,14 +136,14 @@ class cEnemy
 		vspeed = 3;
 		if(y > 1600)
 		vspeed = -3;
-		if(hspeed > 1)
-		hspeed = 1;
-		if(hspeed < -1)
-		hspeed = -1;
-		if(vspeed > 1)
-		vspeed = 1;
-		if(vspeed < -1)
-		vspeed = -1;
+		if(hspeed > 2)
+		hspeed = 2;
+		if(hspeed < -2)
+		hspeed = -2;
+		if(vspeed > 2)
+		vspeed = 2;
+		if(vspeed < -2)
+		vspeed = -2;
 		if(sqrt((targetx-x)*(targetx-x)+(targety-y)*(targety-y))<(24))
 		{
 			playerHealth -= 20;
@@ -208,13 +208,13 @@ class cEnemy
 		{
 			
 			if(x >= otherx)
-			hspeed += ((otherx-x)*(otherx-x)/80);
+			hspeed += ((otherx-x)*(otherx-x)/50);
 			if(x <= otherx)
-			hspeed -= ((otherx-x)*(otherx-x)/80);
+			hspeed -= ((otherx-x)*(otherx-x)/50);
 			if(y >= othery)
-			vspeed += ((othery-y)*(othery-y)/80);
+			vspeed += ((othery-y)*(othery-y)/50);
 			if(y <= othery)
-			vspeed -= ((othery-y)*(othery-y)/80);
+			vspeed -= ((othery-y)*(othery-y)/50);
 		}
 	}
 	//collision with other bullets

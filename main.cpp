@@ -117,6 +117,7 @@ mt.max();
 	SDL_Texture *sGoal = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sBullet = loadTexture("sEnemy.png", renderer);
 	SDL_Texture *sRectangle = loadTexture("sRectangle.png", renderer);
+	SDL_Texture *sBlock = loadTexture("sBlock.png", renderer);
 	SDL_Texture *sHealthbar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sRBar = loadTexture("sRectangle.png", renderer);
 	SDL_Texture *sGBar = loadTexture("sRectangle.png", renderer);
@@ -226,7 +227,7 @@ mt.max();
 			{
 				for(int g = 0; g<8;g++)
 				{
-					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[t].oBlock[i].x+8, oMapMaker.oRoomCreator[t].oBlock[i].y+8,16);
+					oMapMaker.oRoomCreator[p].oSpawner.oEnemy[g].checkCollision(oMapMaker.oRoomCreator[t].oBlock[i].x+8, oMapMaker.oRoomCreator[t].oBlock[i].y+8,18);
 				}
 			}
 		}
@@ -295,11 +296,11 @@ mt.max();
 			// Draw background
 			
 			renderTexture(sBlackBackground, renderer, 0, 0);
-			renderTexture(sBackground, renderer, -800+viewx, -608+viewy);
+			renderTexture(sBackground, renderer, -801+viewx, -610+viewy);
 			
 			// Menu and points and stuff
 
-			oMapMaker.draw(renderer, sRectangle, sEnemy);//new sprite later
+			oMapMaker.draw(renderer, sBlock, sEnemy);//new sprite later
 			//Player
 
 			renderTexture(sGoal, renderer, -768+viewx, -568+viewy);

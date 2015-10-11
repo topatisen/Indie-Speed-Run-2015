@@ -289,7 +289,7 @@ class cPlayer
 		{
 			shootingDir = 1;
 			}
-				hspeed = 2;
+				hspeed = 3;
 		}
 		if(walkLeft == true)
 		{
@@ -297,7 +297,7 @@ class cPlayer
 		{
 			shootingDir = 3;
 			}
-				hspeed = -2;
+				hspeed = -3;
 		}
 		if(walkUp == true)
 		{
@@ -305,7 +305,7 @@ class cPlayer
 		{
 			shootingDir = 0;
 			}
-			vspeed = -2;
+			vspeed = -3;
 		}
 		if(walkDown == true)
 		{
@@ -313,7 +313,7 @@ class cPlayer
 			{
 				shootingDir = 2;
 				}
-				vspeed = 2;
+				vspeed = 3;
 		}
 		if(shooting == true)
 		{
